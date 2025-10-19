@@ -1,4 +1,4 @@
-# companion-module-[replace with module name]
+# companion-surface-elgato-stream-deck
 
 See [HELP.md](./companion/HELP.md) and [LICENSE](./LICENSE)
 

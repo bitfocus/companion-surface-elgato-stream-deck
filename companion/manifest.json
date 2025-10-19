@@ -16,7 +16,6 @@
 	],
 	"runtime": {
 		"type": "node22",
-		"api": "nodejs-ipc",
 		"apiVersion": "0.0.0",
 		"entrypoint": "../dist/main.js"
 	},
