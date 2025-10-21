@@ -5,9 +5,9 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@companion-module/tools@npm:2.4.2-nightly-main-20251020-230431-e7dffe2":
-  version: 2.4.2-nightly-main-20251020-230431-e7dffe2
-  resolution: "@companion-module/tools@npm:2.4.2-nightly-main-20251020-230431-e7dffe2"
+"@companion-module/tools@npm:2.4.2-nightly-main-20251021-232112-36bfae9":
+  version: 2.4.2-nightly-main-20251021-232112-36bfae9
+  resolution: "@companion-module/tools@npm:2.4.2-nightly-main-20251021-232112-36bfae9"
   dependencies:
     "@eslint/js": "npm:^9.38.0"
     eslint-config-prettier: "npm:^10.1.8"
@@ -43,7 +43,7 @@ __metadata:
     companion-module-check: scripts/check-connection.js
     companion-surface-build: scripts/build-surface.js
     companion-surface-check: scripts/check-surface.js
-  checksum: 10c0/28b71bb4ff507637d695c69f05921f46c9e3fa021c8dbda304e11e591f1f284cbac79496a36addbf7d34a0be62b8953d8e793a3c4d78f9487452743afd845331
+  checksum: 10c0/111734f1b251d65c02fc3d9675df4a5288945d2dab5e6798bc6a25b6c60f1b2a75ffd6f7e28cfc984b32cba1e74af6dae7629ad7c5c817806f6b861891865aa0
   languageName: node
   linkType: hard
 
@@ -1253,7 +1253,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "companion-surface-elgato-stream-deck@workspace:."
   dependencies:
-    "@companion-module/tools": "npm:2.4.2-nightly-main-20251020-230431-e7dffe2"
+    "@companion-module/tools": "npm:2.4.2-nightly-main-20251021-232112-36bfae9"
     "@companion-surface/base": "npm:~0.1.5"
     "@elgato-stream-deck/node": "npm:^7.3.4"
     "@elgato-stream-deck/tcp": "npm:^7.3.4"
