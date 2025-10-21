@@ -23,7 +23,7 @@
 		"yarn": "^4"
 	},
 	"dependencies": {
-		"@companion-surface/base": "~0.1.2",
+		"@companion-surface/base": "~0.1.5",
 		"@elgato-stream-deck/node": "^7.3.3",
 		"@elgato-stream-deck/tcp": "^7.3.3",
 		"@julusian/jpeg-turbo": "^2.3.0"

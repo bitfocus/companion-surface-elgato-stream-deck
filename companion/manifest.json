@@ -3,6 +3,7 @@
 	"type": "surface",
 	"id": "elgato-stream-deck",
 	"name": "Elgato Stream Deck",
+	"shortname": "elgato-stream-deck",
 	"description": "",
 	"version": "0.0.0",
 	"license": "MIT",
