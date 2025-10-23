@@ -5,10 +5,13 @@ import {
 	SurfaceContext,
 	SurfaceInstance,
 	parseColor,
+	SurfaceFirmwareUpdateCache,
+	SurfaceFirmwareUpdateInfo,
 } from '@companion-surface/base'
 import { DeviceModelId, StreamDeck, StreamDeckLcdSegmentControlDefinition } from '@elgato-stream-deck/node'
 import { setTimeout } from 'node:timers/promises'
 import { getControlId, getControlIdFromXy, matchOffsetByControlId } from './util.js'
+import { checkForFirmwareUpdatesForSurface } from './firmware.js'
 
 export class StreamDeckWrapper implements SurfaceInstance {
 	readonly #deck: StreamDeck
@@ -260,5 +263,9 @@ export class StreamDeckWrapper implements SurfaceInstance {
 		}
 
 		await Promise.all(ps)
+	}
+
+	async checkForFirmwareUpdates(versionsCache: SurfaceFirmwareUpdateCache): Promise<SurfaceFirmwareUpdateInfo | null> {
+		return checkForFirmwareUpdatesForSurface(versionsCache, this.#surfaceId, this.#deck)
 	}
 }

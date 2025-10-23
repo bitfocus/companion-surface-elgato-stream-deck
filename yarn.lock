@@ -456,6 +456,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/semver@npm:^7":
+  version: 7.7.1
+  resolution: "@types/semver@npm:7.7.1"
+  checksum: 10c0/c938aef3bf79a73f0f3f6037c16e2e759ff40c54122ddf0b2583703393d8d3127130823facb880e694caa324eb6845628186aac1997ee8b31dc2d18fafe26268
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/eslint-plugin@npm:8.46.2":
   version: 8.46.2
   resolution: "@typescript-eslint/eslint-plugin@npm:8.46.2"
@@ -1259,11 +1266,13 @@ __metadata:
     "@elgato-stream-deck/tcp": "npm:^7.3.4"
     "@julusian/jpeg-turbo": "npm:^2.3.0"
     "@types/node": "npm:^22.18.12"
+    "@types/semver": "npm:^7"
     eslint: "npm:^9.38.0"
     husky: "npm:^9.1.7"
     lint-staged: "npm:^16.2.5"
     prettier: "npm:^3.6.2"
     rimraf: "npm:^6.0.1"
+    semver: "npm:^7.7.3"
     typescript: "npm:~5.9.3"
     typescript-eslint: "npm:^8.46.2"
   languageName: unknown
