@@ -1,4 +1,13 @@
-import type { StreamDeckControlDefinition, StreamDeckLcdSegmentControlDefinition } from '@elgato-stream-deck/node'
+import type {
+	JPEGEncodeOptions,
+	StreamDeckControlDefinition,
+	StreamDeckLcdSegmentControlDefinition,
+} from '@elgato-stream-deck/node'
+
+export const StreamDeckJpegOptions: JPEGEncodeOptions = {
+	quality: 95,
+	subsampling: 1, // 422
+}
 
 export function getControlId(control: StreamDeckControlDefinition, xOffset = 0): string {
 	return `${control.row}/${control.column + xOffset}`

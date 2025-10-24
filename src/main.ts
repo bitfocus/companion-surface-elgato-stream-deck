@@ -1,4 +1,4 @@
-import {
+import type {
 	DiscoveredSurfaceInfo,
 	HIDDevice,
 	OpenSurfaceResult,
@@ -15,16 +15,33 @@ import { DEVICE_MODELS } from '@elgato-stream-deck/core'
 import { generatePincodeMap } from './pincode.js'
 import { StreamDeckWrapper } from './instance.js'
 import { createSurfaceSchema } from './surface-schema.js'
+import { StreamDeckPluginRemoteService } from './remote.js'
+import { StreamDeckJpegOptions } from './util.js'
+import type { StreamDeckTcp } from '@elgato-stream-deck/tcp'
 
-const StreamDeckPlugin: SurfacePlugin<StreamDeckDeviceInfo> = {
+export type SomeStreamDeckDeviceInfo = LocalStreamDeckDeviceInfo | RemoteStreamDeckDeviceInfo
+
+export interface LocalStreamDeckDeviceInfo extends StreamDeckDeviceInfo {
+	type: 'local'
+}
+export interface RemoteStreamDeckDeviceInfo {
+	type: 'remote'
+	streamdeck: StreamDeckTcp
+}
+
+const remoteService = new StreamDeckPluginRemoteService()
+
+const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
+	remote: remoteService,
+
 	init: async (): Promise<void> => {
-		// Nothing to do
+		await remoteService.init()
 	},
 	destroy: async (): Promise<void> => {
-		// Nothing to do
+		await remoteService.destroy()
 	},
 
-	checkSupportsHidDevice: (device: HIDDevice): DiscoveredSurfaceInfo<StreamDeckDeviceInfo> | null => {
+	checkSupportsHidDevice: (device: HIDDevice): DiscoveredSurfaceInfo<SomeStreamDeckDeviceInfo> | null => {
 		const sdInfo = getStreamDeckDeviceInfo(device)
 		if (!sdInfo || !sdInfo.serialNumber) return null
 
@@ -33,21 +50,21 @@ const StreamDeckPlugin: SurfacePlugin<StreamDeckDeviceInfo> = {
 		return {
 			surfaceId: `streamdeck:${sdInfo.serialNumber}`,
 			description: model ? `Elgato ${model.productName}` : `Elgato Stream Deck (${sdInfo.model})`,
-			pluginInfo: sdInfo,
+			pluginInfo: { type: 'local', ...sdInfo },
 		}
 	},
 
 	openSurface: async (
 		surfaceId: string,
-		pluginInfo: StreamDeckDeviceInfo,
+		pluginInfo: SomeStreamDeckDeviceInfo,
 		context: SurfaceContext,
 	): Promise<OpenSurfaceResult> => {
-		const streamdeck = await openStreamDeck(pluginInfo.path, {
-			jpegOptions: {
-				quality: 95,
-				subsampling: 1, // 422
-			},
-		})
+		const streamdeck =
+			pluginInfo.type === 'remote'
+				? pluginInfo.streamdeck
+				: await openStreamDeck(pluginInfo.path, { jpegOptions: StreamDeckJpegOptions })
+
+		console.log('open', pluginInfo)
 
 		return {
 			surface: new StreamDeckWrapper(surfaceId, streamdeck, context),
@@ -56,6 +73,7 @@ const StreamDeckPlugin: SurfacePlugin<StreamDeckDeviceInfo> = {
 				surfaceLayout: createSurfaceSchema(streamdeck),
 				pincodeMap: generatePincodeMap(streamdeck.MODEL),
 			},
+			// location: null, // TODO
 		}
 	},
 }
