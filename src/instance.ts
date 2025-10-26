@@ -7,14 +7,19 @@ import {
 	parseColor,
 	SurfaceFirmwareUpdateCache,
 	SurfaceFirmwareUpdateInfo,
+	createModuleLogger,
+	ModuleLogger,
 } from '@companion-surface/base'
 import { DeviceModelId, StreamDeck, StreamDeckLcdSegmentControlDefinition } from '@elgato-stream-deck/node'
 import { setTimeout } from 'node:timers/promises'
 import { getControlId, getControlIdFromXy, matchOffsetByControlId } from './util.js'
 import { checkForFirmwareUpdatesForSurface } from './firmware.js'
+import { StreamDeckTcp } from '@elgato-stream-deck/tcp'
 
 export class StreamDeckWrapper implements SurfaceInstance {
-	readonly #deck: StreamDeck
+	readonly #logger: ModuleLogger
+
+	readonly #deck: StreamDeck | StreamDeckTcp
 	readonly #surfaceId: string
 	readonly #context: SurfaceContext
 
@@ -23,6 +28,11 @@ export class StreamDeckWrapper implements SurfaceInstance {
 	 */
 	#fullLcdDirty = true
 
+	/**
+	 * Whether to cleanup the deck on quit
+	 */
+	#shouldCleanupOnQuit = true
+
 	public get surfaceId(): string {
 		return this.#surfaceId
 	}
@@ -30,7 +40,8 @@ export class StreamDeckWrapper implements SurfaceInstance {
 		return this.#deck.PRODUCT_NAME
 	}
 
-	public constructor(surfaceId: string, deck: StreamDeck, context: SurfaceContext) {
+	public constructor(surfaceId: string, deck: StreamDeck | StreamDeckTcp, context: SurfaceContext) {
+		this.#logger = createModuleLogger(`Instance/${surfaceId}`)
 		this.#deck = deck
 		this.#surfaceId = surfaceId
 		this.#context = context
@@ -66,6 +77,22 @@ export class StreamDeckWrapper implements SurfaceInstance {
 
 			context.keyDownUpById(getControlIdFromXy(column, control.row))
 		})
+
+		const tcpStreamdeck = 'tcpEvents' in deck ? deck : null
+		if (tcpStreamdeck) {
+			// Don't call `close` upon quit, that gets handled automatically
+			this.#shouldCleanupOnQuit = false
+
+			// this.info.location = tcpStreamdeck.remoteAddress
+
+			tcpStreamdeck.tcpEvents.on('disconnected', () => {
+				this.#logger.warn(
+					`Lost connection to TCP Streamdeck ${tcpStreamdeck.remoteAddress}:${tcpStreamdeck.remotePort} (${this.#deck.PRODUCT_NAME})`,
+				)
+
+				this.#context.disconnect(new Error('Stream Deck Disconnected'))
+			})
+		}
 	}
 
 	async init(): Promise<void> {
@@ -73,6 +100,8 @@ export class StreamDeckWrapper implements SurfaceInstance {
 		await this.blank()
 	}
 	async close(): Promise<void> {
+		if (!this.#shouldCleanupOnQuit) return
+
 		await this.#deck.resetToLogo().catch(() => null)
 
 		await this.#deck.close()
@@ -106,7 +135,7 @@ export class StreamDeckWrapper implements SurfaceInstance {
 		if (control.type === 'button') {
 			if (control.feedbackType === 'lcd') {
 				if (!drawProps.image) {
-					console.error(`No image provided for lcd button`)
+					this.#logger.error(`No image provided for lcd button: ${drawProps.controlId}`)
 					return
 				}
 
@@ -123,7 +152,7 @@ export class StreamDeckWrapper implements SurfaceInstance {
 						break
 					} catch (e) {
 						if (attempts == maxAttempts) {
-							console.log(`fillImage failed after ${attempts} attempts: ${e}`)
+							this.#logger.error(`fillImage of ${drawProps.controlId} failed after ${attempts} attempts: ${e}`)
 							return
 						}
 						await setTimeout(20, { signal })
@@ -135,12 +164,12 @@ export class StreamDeckWrapper implements SurfaceInstance {
 				if (signal.aborted) return
 
 				this.#deck.fillKeyColor(control.index, color.r, color.g, color.b).catch((e) => {
-					console.log(`color failed: ${e}`)
+					this.#logger.error(`fillKeyColor of ${drawProps.controlId} failed: ${e}`)
 				})
 			}
 		} else if (control.type === 'lcd-segment') {
 			if (!drawProps.image) {
-				console.error(`No image provided for lcd-segment`)
+				this.#logger.error(`No image provided for lcd-segment: ${drawProps.controlId}`)
 				return
 			}
 
@@ -164,7 +193,7 @@ export class StreamDeckWrapper implements SurfaceInstance {
 			if (control.drawRegions) {
 				const drawColumn = matchOffsetByControlId(drawProps.controlId, control)
 				if (drawColumn === null) {
-					console.error(`Failed to find column for controlId ${drawProps.controlId}`)
+					this.#logger.error(`Failed to find column for controlId ${drawProps.controlId}`)
 					return
 				}
 
@@ -190,7 +219,7 @@ export class StreamDeckWrapper implements SurfaceInstance {
 						return
 					} catch (e) {
 						if (attempts == maxAttempts) {
-							console.error(`fillImage failed after ${attempts}: ${e}`)
+							this.#logger.error(`fillImage of ${drawProps.controlId} failed after ${attempts}: ${e}`)
 							return
 						}
 						await setTimeout(20, { signal })
@@ -230,7 +259,7 @@ export class StreamDeckWrapper implements SurfaceInstance {
 						})
 					})
 					.catch((e) => {
-						console.error(`Failed to fill device`, e)
+						this.#logger.error(`Failed to fill device: ${e}`)
 					}),
 			)
 
@@ -256,7 +285,7 @@ export class StreamDeckWrapper implements SurfaceInstance {
 							})
 						})
 						.catch((e) => {
-							console.error(`Failed to fill device`, e)
+							this.#logger.error(`Failed to fill device: ${e}`)
 						}),
 				)
 			}

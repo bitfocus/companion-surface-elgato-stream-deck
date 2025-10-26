@@ -1,9 +1,10 @@
-import type {
-	DiscoveredSurfaceInfo,
-	HIDDevice,
-	OpenSurfaceResult,
-	SurfaceContext,
-	SurfacePlugin,
+import {
+	createModuleLogger,
+	type DiscoveredSurfaceInfo,
+	type HIDDevice,
+	type OpenSurfaceResult,
+	type SurfaceContext,
+	type SurfacePlugin,
 } from '@companion-surface/base'
 import {
 	DeviceModelId,
@@ -31,6 +32,8 @@ export interface RemoteStreamDeckDeviceInfo {
 
 const remoteService = new StreamDeckPluginRemoteService()
 
+const logger = createModuleLogger('Plugin')
+
 const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 	remote: remoteService,
 
@@ -46,6 +49,8 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 		if (!sdInfo || !sdInfo.serialNumber) return null
 
 		const model = DEVICE_MODELS.find((m) => m.id === sdInfo.model)
+
+		logger.debug(`Checked HID device: ${model ? model.productName : `Unknown Model (${sdInfo.model})`}`)
 
 		return {
 			surfaceId: `streamdeck:${sdInfo.serialNumber}`,
@@ -64,7 +69,7 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 				? pluginInfo.streamdeck
 				: await openStreamDeck(pluginInfo.path, { jpegOptions: StreamDeckJpegOptions })
 
-		console.log('open', pluginInfo)
+		logger.debug(`Opening ${pluginInfo.type} device: ${streamdeck.PRODUCT_NAME} (${surfaceId})`)
 
 		return {
 			surface: new StreamDeckWrapper(surfaceId, streamdeck, context),
@@ -72,8 +77,8 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 				brightness: streamdeck.MODEL !== DeviceModelId.PEDAL,
 				surfaceLayout: createSurfaceSchema(streamdeck),
 				pincodeMap: generatePincodeMap(streamdeck.MODEL),
+				location: pluginInfo.type === 'remote' ? pluginInfo.streamdeck.remoteAddress : null,
 			},
-			// location: null, // TODO
 		}
 	},
 }

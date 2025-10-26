@@ -1,9 +1,10 @@
-import type {
-	DiscoveredSurfaceInfo,
-	RemoteSurfaceConnectionInfo,
-	SomeCompanionInputField,
-	SurfacePluginRemote,
-	SurfacePluginRemoteEvents,
+import {
+	createModuleLogger,
+	type DiscoveredSurfaceInfo,
+	type RemoteSurfaceConnectionInfo,
+	type SomeCompanionInputField,
+	type SurfacePluginRemote,
+	type SurfacePluginRemoteEvents,
 } from '@companion-surface/base'
 import { DEFAULT_TCP_PORT, StreamDeckTcpConnectionManager } from '@elgato-stream-deck/tcp'
 import EventEmitter from 'node:events'
@@ -19,6 +20,8 @@ export class StreamDeckPluginRemoteService
 	extends EventEmitter<SurfacePluginRemoteEvents<RemoteStreamDeckDeviceInfo>>
 	implements SurfacePluginRemote<RemoteStreamDeckDeviceInfo>
 {
+	readonly #logger = createModuleLogger('RemoteService')
+
 	readonly #connectionManager = new StreamDeckTcpConnectionManager({
 		jpegOptions: StreamDeckJpegOptions,
 		autoConnectToSecondaries: true,
@@ -34,10 +37,13 @@ export class StreamDeckPluginRemoteService
 		super()
 
 		this.#connectionManager.on('connected', (streamdeck) => {
+			this.#logger.debug(`StreamDeck connection opened: ${streamdeck.PRODUCT_NAME}. Retrieving serial number...`)
+
 			// TODO - this async feels unsafe...
 			streamdeck
 				.getSerialNumber()
 				.then((serial) => {
+					this.#logger.info(`StreamDeck connected: ${streamdeck.PRODUCT_NAME} (${serial})`)
 					this.emit('surfacesConnected', [
 						{
 							surfaceId: `streamdeck:${serial}`,
@@ -51,7 +57,7 @@ export class StreamDeckPluginRemoteService
 					])
 				})
 				.catch((e) => {
-					console.error('Failed to get serial number for connected streamdeck', e)
+					this.#logger.error(`Failed to get serial number for connected streamdeck: ${e}`)
 				})
 		})
 		// Disconnect events are emitted by each streamdeck instance
@@ -75,7 +81,7 @@ export class StreamDeckPluginRemoteService
 			id: 'address',
 			type: 'textinput',
 			label: 'IP Address',
-			default: '',
+			default: new Date().toISOString(),
 		},
 		{
 			id: 'port',
@@ -108,6 +114,8 @@ export class StreamDeckPluginRemoteService
 	// }
 
 	async startConnections(connectionInfos: RemoteSurfaceConnectionInfo[]): Promise<void> {
+		this.#logger.info(`Starting connections: ${connectionInfos.map((c) => c.connectionId).join(', ')}`)
+
 		const invalidIds: string[] = []
 
 		for (const info of connectionInfos) {
@@ -119,12 +127,15 @@ export class StreamDeckPluginRemoteService
 				continue
 			}
 
-			// Check if this connectionId already exists with a different address
+			// Check if this connectionId already exists
 			const oldAddressKey = this.#activeConnections.get(info.connectionId)
-			if (oldAddressKey && oldAddressKey !== newAddressKey) {
-				// Config changed - clean up the old connection
-				this.#activeConnections.delete(info.connectionId)
+			if (oldAddressKey === newAddressKey) {
+				// Same connectionId with same address - this is a no-op update
+				continue
+			}
 
+			if (oldAddressKey !== undefined) {
+				// ConnectionId exists but address changed - decrement old address ref count
 				const oldRefCount = this.#connectionRefCounts.get(oldAddressKey)
 				if (oldRefCount !== undefined) {
 					if (oldRefCount <= 1) {
@@ -156,10 +167,12 @@ export class StreamDeckPluginRemoteService
 			}
 		}
 
-		await this.stopConnections(invalidIds)
+		if (invalidIds.length > 0) await this.stopConnections(invalidIds)
 	}
 
 	async stopConnections(connectionIds: string[]): Promise<void> {
+		this.#logger.info(`Stopping connections: ${connectionIds.join(', ')}`)
+
 		for (const connectionId of connectionIds) {
 			const addressKey = this.#activeConnections.get(connectionId)
 			if (!addressKey) continue
