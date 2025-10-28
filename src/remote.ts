@@ -6,7 +6,11 @@ import {
 	type SurfacePluginRemote,
 	type SurfacePluginRemoteEvents,
 } from '@companion-surface/base'
-import { DEFAULT_TCP_PORT, StreamDeckTcpConnectionManager } from '@elgato-stream-deck/tcp'
+import {
+	DEFAULT_TCP_PORT,
+	StreamDeckTcpConnectionManager,
+	StreamDeckTcpDiscoveryService,
+} from '@elgato-stream-deck/tcp'
 import EventEmitter from 'node:events'
 import { StreamDeckJpegOptions } from './util.js'
 import type { RemoteStreamDeckDeviceInfo } from './main.js'
@@ -31,7 +35,7 @@ export class StreamDeckPluginRemoteService
 	// Map address:port key -> reference count
 	readonly #connectionRefCounts = new Map<string, number>()
 
-	// #discoveryService: StreamDeckTcpDiscoveryService | undefined
+	#discoveryService: StreamDeckTcpDiscoveryService | undefined
 
 	constructor() {
 		super()
@@ -64,14 +68,39 @@ export class StreamDeckPluginRemoteService
 	}
 
 	async init(): Promise<void> {
-		// Nothing to do
+		this.#discoveryService = new StreamDeckTcpDiscoveryService()
+
+		this.#discoveryService.on('up', (streamdeck) => {
+			if (!streamdeck.isPrimary) return
+
+			this.#logger.debug(`Found "${streamdeck.name}" at ${streamdeck.address}:${streamdeck.port}`)
+
+			this.emit('connectionsFound', [
+				{
+					id: `${streamdeck.address}:${streamdeck.port}`,
+					displayName: streamdeck.name,
+					description: streamdeck.modelName,
+					config: {
+						address: streamdeck.address,
+						port: streamdeck.port,
+					},
+				},
+			])
+		})
+		this.#discoveryService.on('down', (streamdeck) => {
+			if (!streamdeck.isPrimary) return
+
+			this.emit('connectionsForgotten', [`${streamdeck.address}:${streamdeck.port}`])
+		})
+
+		this.#discoveryService.query()
 	}
 	async destroy(): Promise<void> {
 		// Shutdown discovery
-		// if (this.#discoveryService) {
-		// 	this.#discoveryService.destroy()
-		// 	this.#discoveryService = undefined
-		// }
+		if (this.#discoveryService) {
+			this.#discoveryService.destroy()
+			this.#discoveryService = undefined
+		}
 
 		this.#connectionManager.disconnectFromAll()
 	}
@@ -202,18 +231,6 @@ export class StreamDeckPluginRemoteService
 	}
 
 	rejectSurface(_surfaceInfo: DiscoveredSurfaceInfo<RemoteStreamDeckDeviceInfo>): void {
-		// TODO?
+		// Can't really do anything here
 	}
 }
-
-// function discoveryServiceToHost(service: StreamDeckTcpDefinition): DiscoveredRemoteSurfaceInfo {
-// 	return {
-// 		connectionId: `streamdeck:${service.address}:${service.port}`,
-// 		description: `Elgato ${service.modelName} (${service.serialNumber ?? ''})`,
-// 		addresses: [service.address],
-// 		config: {
-// 			address: service.address,
-// 			port: service.port,
-// 		} satisfies StreamDeckTcpConnectionConfig,
-// 	}
-// }
