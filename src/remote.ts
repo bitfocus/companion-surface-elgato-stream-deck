@@ -122,6 +122,9 @@ export class StreamDeckPluginRemoteService
 		},
 	]
 
+	readonly checkConfigMatchesExpression: string | null =
+		'$(objA:address) == $(objB:address) && $(objA:port) == $(objB:port)'
+
 	// async startStopDiscovery(enable: boolean): Promise<void> {
 	// 	if (enable && !this.#discoveryService) {
 	// 		this.#discoveryService = new StreamDeckTcpDiscoveryService()

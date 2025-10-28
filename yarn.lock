@@ -47,12 +47,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@companion-surface/base@npm:~0.3.0":
-  version: 0.3.0
-  resolution: "@companion-surface/base@npm:0.3.0"
+"@companion-surface/base@npm:~0.3.1":
+  version: 0.3.1
+  resolution: "@companion-surface/base@npm:0.3.1"
   dependencies:
     tslib: "npm:^2.8.1"
-  checksum: 10c0/6f404ebdf6a7b10c19adb5ed06d98cb276badee835a385736dc139b3710ad749582befd4eee4376cb2b18a8e2769afcf8af7881579ff5e2907bf8f5a2ad21fb5
+  checksum: 10c0/4df9575dd5a942041e6315bda8307ccde0b753c25ce231313cfa419fa7ba514ff83f8eae7945243d0fa5517505b2a6e3b6f6b43b4e48581afaa4a4f9061d373e
   languageName: node
   linkType: hard
 
@@ -1261,7 +1261,7 @@ __metadata:
   resolution: "companion-surface-elgato-stream-deck@workspace:."
   dependencies:
     "@companion-module/tools": "npm:2.4.2-nightly-main-20251021-232112-36bfae9"
-    "@companion-surface/base": "npm:~0.3.0"
+    "@companion-surface/base": "npm:~0.3.1"
     "@elgato-stream-deck/node": "npm:^7.3.4"
     "@elgato-stream-deck/tcp": "npm:^7.3.4"
     "@julusian/jpeg-turbo": "npm:^2.3.0"
