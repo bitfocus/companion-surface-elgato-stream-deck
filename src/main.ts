@@ -77,6 +77,7 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 				brightness: streamdeck.MODEL !== DeviceModelId.PEDAL,
 				surfaceLayout: createSurfaceSchema(streamdeck),
 				pincodeMap: generatePincodeMap(streamdeck.MODEL),
+				configFields: null,
 				location: pluginInfo.type === 'remote' ? pluginInfo.streamdeck.remoteAddress : null,
 			},
 		}

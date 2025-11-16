@@ -9,17 +9,11 @@
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-surface-elgato-stream-deck.git",
 	"bugs": "https://github.com/bitfocus/companion-surface-elgato-stream-deck/issues",
-	"maintainers": [
-		{
-			"name": "Julian Waller",
-			"email": "git@julusian.co.uk"
-		}
-	],
-	"runtime": {
-		"type": "node22",
-		"apiVersion": "0.0.0",
-		"entrypoint": "../dist/main.js"
-	},
+	"maintainers": [{ "name": "Julian Waller", "email": "git@julusian.co.uk" }],
+	"runtime": { "type": "node22", "apiVersion": "0.0.0", "entrypoint": "../dist/main.js" },
 	"keywords": ["elgato", "stream deck", "streamdeck"],
-	"products": ["Elgato Stream Deck"]
+	"products": ["Elgato Stream Deck"],
+	"usbIds": [
+		{ "vendorId": 4057, "productIds": [96, 99, 144, 108, 143, 109, 128, 165, 132, 134, 154, 170, 184, 185, 186] }
+	]
 }
