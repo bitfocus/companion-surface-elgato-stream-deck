@@ -71,6 +71,14 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 
 		logger.debug(`Opening ${pluginInfo.type} device: ${streamdeck.PRODUCT_NAME} (${surfaceId})`)
 
+		// Log firmware version
+		try {
+			const firmware = await streamdeck.getFirmwareVersion()
+			logger.info(`StreamDeck firmware version: ${firmware}`)
+		} catch (e) {
+			logger.warn(`Failed to get StreamDeck firmware version: ${e}`)
+		}
+
 		return {
 			surface: new StreamDeckWrapper(surfaceId, streamdeck, context),
 			registerProps: {
