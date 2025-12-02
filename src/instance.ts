@@ -33,6 +33,8 @@ export class StreamDeckWrapper implements SurfaceInstance {
 	 */
 	#shouldCleanupOnQuit = true
 
+	#swipeToChangePage = false
+
 	public get surfaceId(): string {
 		return this.#surfaceId
 	}
@@ -78,6 +80,36 @@ export class StreamDeckWrapper implements SurfaceInstance {
 			context.keyDownUpById(getControlIdFromXy(column, control.row))
 		})
 
+		const getLCDButton = (control: StreamDeckLcdSegmentControlDefinition, x: number) => {
+			// Button assignment is very permissive, but maybe more compatible with the graphics overhaul?
+			// note: this doesn't take into account the SD Plus button offset, but that gives a little margin to the left, so maybe OK.
+			// TODO: reexamine when double-width buttons are implemented?
+			//   if using the margin, add Math.max(0, Math.min(control.columnSpan-1, ... ))
+			const columnOffset = Math.floor((x / control.pixelSize.width) * control.columnSpan)
+			return control.column + columnOffset
+		}
+		this.#deck.on('lcdSwipe', (control, from, to) => {
+			const angle = Math.atan(Math.abs((from.y - to.y) / (from.x - to.x))) * (180 / Math.PI)
+			const fromButton = getLCDButton(control, from.x)
+			const toButton = getLCDButton(control, to.x)
+			this.#logger.debug(
+				`LCD #${control.id} swipe: (${from.x}, ${from.y}; button:${fromButton})->(${to.x}, ${to.y}; button: ${toButton}): Angle: ${angle.toFixed(1)}`,
+			)
+			// avoid ambiguous swipes, so vertical has to be "clearly vertical", so make it a bit more than 45
+			if (angle >= 50 && toButton === fromButton) {
+				//vertical swipe. note that y=0 is the top of the screen so for swipe up `from.y` is the higher
+				const controlId = getControlIdFromXy(fromButton, control.row)
+				if (from.y > to.y) {
+					context.rotateRightById(controlId)
+				} else {
+					context.rotateLeftById(controlId)
+				}
+			} else if (angle <= 22.5 && this.#swipeToChangePage) {
+				// horizontal swipe, change pages: (note that the angle of the SD+ screen diagonal is 7 degrees, i.e. atan 1/8)
+				context.changePage(from.x > to.x) //swipe left moves to next page, as if your finger is moving a piece of paper under the screen
+			}
+		})
+
 		const tcpStreamdeck = 'tcpEvents' in deck ? deck : null
 		if (tcpStreamdeck) {
 			// Don't call `close` upon quit, that gets handled automatically
@@ -109,6 +141,10 @@ export class StreamDeckWrapper implements SurfaceInstance {
 
 	updateCapabilities(_capabilities: HostCapabilities): void {
 		// Not used
+	}
+
+	async updateConfig(config: Record<string, any>): Promise<void> {
+		this.#swipeToChangePage = !!config.swipe_can_change_page
 	}
 
 	async ready(): Promise<void> {}

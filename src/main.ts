@@ -1,5 +1,6 @@
 import {
 	createModuleLogger,
+	SomeCompanionInputField,
 	type DiscoveredSurfaceInfo,
 	type HIDDevice,
 	type OpenSurfaceResult,
@@ -79,13 +80,24 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 			logger.warn(`Failed to get StreamDeck firmware version: ${e}`)
 		}
 
+		const configFields: SomeCompanionInputField[] = []
+		if (streamdeck.MODEL === DeviceModelId.PLUS) {
+			configFields.push({
+				id: 'swipe_can_change_page',
+				label: 'Horizontal Swipe Changes Page',
+				type: 'checkbox',
+				default: false,
+				tooltip: 'Swiping horizontally on the Stream Deck+ LCD-strip will change pages, if enabled.',
+			})
+		}
+
 		return {
 			surface: new StreamDeckWrapper(surfaceId, streamdeck, context),
 			registerProps: {
 				brightness: streamdeck.MODEL !== DeviceModelId.PEDAL,
 				surfaceLayout: createSurfaceSchema(streamdeck),
 				pincodeMap: generatePincodeMap(streamdeck.MODEL),
-				configFields: null,
+				configFields: configFields.length > 0 ? configFields : null,
 				location: pluginInfo.type === 'remote' ? pluginInfo.streamdeck.remoteAddress : null,
 			},
 		}
