@@ -51,7 +51,7 @@ export class StreamDeckPluginRemoteService
 					this.emit('surfacesConnected', [
 						{
 							surfaceId: `streamdeck:${serial}`,
-							description: `Elgato ${streamdeck.PRODUCT_NAME} (${serial})`,
+							description: `Elgato ${streamdeck.PRODUCT_NAME}`,
 							// TODO - can/should this be possible to be disabled, or should it be forced?
 							pluginInfo: {
 								type: 'remote',
