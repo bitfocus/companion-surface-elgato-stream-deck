@@ -1,6 +1,6 @@
 import {
 	createModuleLogger,
-	type DiscoveredSurfaceInfo,
+	type DetectionSurfaceInfo,
 	type RemoteSurfaceConnectionInfo,
 	type SomeCompanionInputField,
 	type SurfacePluginRemote,
@@ -14,6 +14,7 @@ import {
 import EventEmitter from 'node:events'
 import { StreamDeckJpegOptions } from './util.js'
 import type { RemoteStreamDeckDeviceInfo } from './main.js'
+import { nanoid } from 'nanoid'
 
 export interface StreamDeckTcpConnectionConfig {
 	address: string
@@ -50,6 +51,7 @@ export class StreamDeckPluginRemoteService
 					this.#logger.info(`StreamDeck connected: ${streamdeck.PRODUCT_NAME} (${serial})`)
 					this.emit('surfacesConnected', [
 						{
+							deviceHandle: nanoid(), // Generate a unique ID for this remote device
 							surfaceId: `streamdeck:${serial}`,
 							description: `Elgato ${streamdeck.PRODUCT_NAME}`,
 							// TODO - can/should this be possible to be disabled, or should it be forced?
@@ -233,7 +235,7 @@ export class StreamDeckPluginRemoteService
 		}
 	}
 
-	rejectSurface(_surfaceInfo: DiscoveredSurfaceInfo<RemoteStreamDeckDeviceInfo>): void {
+	rejectSurface(_surfaceInfo: DetectionSurfaceInfo<RemoteStreamDeckDeviceInfo>): void {
 		// Can't really do anything here
 	}
 }

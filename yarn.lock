@@ -47,12 +47,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@companion-surface/base@npm:~1.0.0":
-  version: 1.0.0
-  resolution: "@companion-surface/base@npm:1.0.0"
+"@companion-surface/base@npm:~1.1.0":
+  version: 1.1.0
+  resolution: "@companion-surface/base@npm:1.1.0"
   dependencies:
     tslib: "npm:^2.8.1"
-  checksum: 10c0/91de4fc7e628fa9e2e9c1e56b2c7f659fc27ef253478d4bb61998798149de7ff756749044e6164ed3a5859b50d93eca673b6fbb792616748d2fb50c4db7359f0
+  checksum: 10c0/611d96c2417f938f2e3052b9193a82d47f1f5dd3468c89fee1443533e1bb93edb779740327d5dcf46ab30ac325017a97f9321253abf3a8f92cfed074116b915b
   languageName: node
   linkType: hard
 
@@ -1232,7 +1232,7 @@ __metadata:
   resolution: "companion-surface-elgato-stream-deck@workspace:."
   dependencies:
     "@companion-module/tools": "npm:^2.5.0"
-    "@companion-surface/base": "npm:~1.0.0"
+    "@companion-surface/base": "npm:~1.1.0"
     "@elgato-stream-deck/node": "npm:^7.4.0"
     "@elgato-stream-deck/tcp": "npm:^7.4.0"
     "@julusian/jpeg-turbo": "npm:^2.3.0"
@@ -1241,6 +1241,7 @@ __metadata:
     eslint: "npm:^9.39.2"
     husky: "npm:^9.1.7"
     lint-staged: "npm:^16.2.7"
+    nanoid: "npm:^5.1.6"
     prettier: "npm:^3.7.4"
     rimraf: "npm:^6.1.2"
     semver: "npm:^7.7.3"
@@ -2725,6 +2726,15 @@ __metadata:
   version: 2.0.0
   resolution: "nano-spawn@npm:2.0.0"
   checksum: 10c0/d00f9b5739f86e28cb732ffd774793e110810cded246b8393c75c4f22674af47f98ee37b19f022ada2d8c9425f800e841caa0662fbff4c0930a10e39339fb366
+  languageName: node
+  linkType: hard
+
+"nanoid@npm:^5.1.6":
+  version: 5.1.6
+  resolution: "nanoid@npm:5.1.6"
+  bin:
+    nanoid: bin/nanoid.js
+  checksum: 10c0/27b5b055ad8332cf4f0f9f6e2a494aa7e5ded89df4cab8c8490d4eabefe72c4423971d2745d22002868b1d50576a5e42b7b05214733b19f576382323282dd26e
   languageName: node
   linkType: hard
 
