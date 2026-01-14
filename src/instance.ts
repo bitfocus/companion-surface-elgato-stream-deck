@@ -66,17 +66,13 @@ export class StreamDeckWrapper implements SurfaceInstance {
 		this.#deck.on('lcdShortPress', (control, position) => {
 			if (context.isLocked) return
 
-			const columnOffset = Math.floor((position.x / control.pixelSize.width) * control.columnSpan)
-			const column = control.column + columnOffset
-
+			const column = getLCDButton(control, position.x)
 			context.keyDownUpById(getControlIdFromXy(column, control.row))
 		})
 		this.#deck.on('lcdLongPress', (control, position) => {
 			if (context.isLocked) return
 
-			const columnOffset = Math.floor((position.x / control.pixelSize.width) * control.columnSpan)
-			const column = control.column + columnOffset
-
+			const column = getLCDButton(control, position.x)
 			context.keyDownUpById(getControlIdFromXy(column, control.row))
 		})
 
@@ -89,6 +85,8 @@ export class StreamDeckWrapper implements SurfaceInstance {
 			return control.column + columnOffset
 		}
 		this.#deck.on('lcdSwipe', (control, from, to) => {
+			if (context.isLocked) return
+
 			const angle = Math.atan(Math.abs((from.y - to.y) / (from.x - to.x))) * (180 / Math.PI)
 			const fromButton = getLCDButton(control, from.x)
 			const toButton = getLCDButton(control, to.x)
