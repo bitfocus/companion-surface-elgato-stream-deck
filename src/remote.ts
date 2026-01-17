@@ -1,5 +1,6 @@
 import {
 	createModuleLogger,
+	type DiscoveredRemoteSurfaceInfo,
 	type DetectionSurfaceInfo,
 	type RemoteSurfaceConnectionInfo,
 	type SomeCompanionInputField,
@@ -72,28 +73,38 @@ export class StreamDeckPluginRemoteService
 	async init(): Promise<void> {
 		this.#discoveryService = new StreamDeckTcpDiscoveryService()
 
-		this.#discoveryService.on('up', (streamdeck) => {
-			if (!streamdeck.isPrimary) return
+		const refreshForAddress = (address: string) => {
+			if (!this.#discoveryService) return
+			const foundDevices = this.#discoveryService.knownStreamDecks
+				.filter((d) => d.address === address)
+				.sort((a, b) => a.port - b.port)
 
-			this.#logger.debug(`Found "${streamdeck.name}" at ${streamdeck.address}:${streamdeck.port}`)
+			const primary = foundDevices.find((d) => d.isPrimary)
+			if (!primary) {
+				// No primary device found at this address, there is nothing usable here!
+				this.emit('connectionsForgotten', [address])
+				return
+			}
 
-			this.emit('connectionsFound', [
-				{
-					id: `${streamdeck.address}:${streamdeck.port}`,
-					displayName: streamdeck.name,
-					description: streamdeck.modelName,
-					config: {
-						address: streamdeck.address,
-						port: streamdeck.port,
-					},
+			const entry: DiscoveredRemoteSurfaceInfo = {
+				id: address,
+				displayName: primary.name,
+				description: primary.modelName,
+				config: {
+					address: primary.address,
+					port: primary.port,
 				},
-			])
-		})
-		this.#discoveryService.on('down', (streamdeck) => {
-			if (!streamdeck.isPrimary) return
+			}
 
-			this.emit('connectionsForgotten', [`${streamdeck.address}:${streamdeck.port}`])
-		})
+			// Add any secondary ports as a suffix
+			const children = foundDevices.filter((d) => !d.isPrimary)
+			if (children.length > 0) entry.description += ' (' + children.map((c) => `${c.modelName}`).join(', ') + ')'
+
+			this.emit('connectionsFound', [entry])
+		}
+
+		this.#discoveryService.on('up', (streamdeck) => refreshForAddress(streamdeck.address))
+		this.#discoveryService.on('down', (streamdeck) => refreshForAddress(streamdeck.address))
 
 		this.#discoveryService.query()
 	}
