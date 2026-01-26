@@ -53,9 +53,15 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 
 		logger.debug(`Checked HID device: ${model ? model.productName : `Unknown Model (${sdInfo.model})`}`)
 
+		// Some models, don't have real serial numbers, so we fake them
+		const useFakeSerialNumber = sdInfo.model === DeviceModelId.GALLEON_K100
+		const serialNumber = useFakeSerialNumber ? DeviceModelId.GALLEON_K100 : sdInfo.serialNumber
+		const companyName = sdInfo.model === DeviceModelId.GALLEON_K100 ? 'Corsair' : 'Elgato'
+
 		return {
-			surfaceId: `streamdeck:${sdInfo.serialNumber}`,
-			description: model ? `Elgato ${model.productName}` : `Elgato Stream Deck (${sdInfo.model})`,
+			surfaceId: `streamdeck:${serialNumber}`,
+			surfaceIdIsNotUnique: useFakeSerialNumber,
+			description: model ? `${companyName} ${model.productName}` : `${companyName} Stream Deck (${sdInfo.model})`,
 			pluginInfo: { type: 'local', ...sdInfo },
 		}
 	},

@@ -1,6 +1,11 @@
 import { assertNever, SurfaceSchemaLayoutDefinition } from '@companion-surface/base'
 import { getControlId } from './util.js'
-import type { StreamDeck } from '@elgato-stream-deck/node'
+import {
+	DeviceModelId,
+	Dimension,
+	StreamDeckLcdSegmentControlDefinition,
+	type StreamDeck,
+} from '@elgato-stream-deck/node'
 
 export function createSurfaceSchema(deck: StreamDeck): SurfaceSchemaLayoutDefinition {
 	const surfaceLayout: SurfaceSchemaLayoutDefinition = {
@@ -57,7 +62,8 @@ export function createSurfaceSchema(deck: StreamDeck): SurfaceSchemaLayoutDefini
 				}
 				break
 			case 'encoder':
-				if (control.hasLed) {
+				// Note: treat the galleon k100 led ring as a single color for now
+				if (control.hasLed || control.ledRingSteps > 0) {
 					surfaceLayout.controls[controlId] = {
 						row: control.row,
 						column: control.column,
@@ -70,22 +76,26 @@ export function createSurfaceSchema(deck: StreamDeck): SurfaceSchemaLayoutDefini
 						stylePreset: 'empty',
 					}
 				}
-				// Future: LED ring
+				// Future: proper LED ring
 				break
 			case 'lcd-segment': {
+				const { columns, pixelSize } = getLcdCellSize(deck.MODEL, control)
+
+				if (columns.length === 0) break
+
 				// const width = control.pixelSize.width / control.columnSpan
-				const presetId = `lcd_${control.pixelSize.height}x${control.pixelSize.height}`
+				const presetId = `lcd_${pixelSize.width}x${pixelSize.height}`
 				if (!surfaceLayout.stylePresets[presetId]) {
 					surfaceLayout.stylePresets[presetId] = {
 						bitmap: {
-							w: control.pixelSize.height,
-							h: control.pixelSize.height,
+							w: pixelSize.width,
+							h: pixelSize.height,
 							format: 'rgb',
 						},
 					}
 				}
 
-				for (let i = 0; i < control.columnSpan; i++) {
+				for (const i of columns) {
 					const controlId = getControlId(control, i)
 					surfaceLayout.controls[controlId] = {
 						row: control.row,
@@ -93,6 +103,7 @@ export function createSurfaceSchema(deck: StreamDeck): SurfaceSchemaLayoutDefini
 						stylePreset: presetId,
 					}
 				}
+
 				break
 			}
 			default:
@@ -102,4 +113,30 @@ export function createSurfaceSchema(deck: StreamDeck): SurfaceSchemaLayoutDefini
 	}
 
 	return surfaceLayout
+}
+
+export function getLcdCellSize(
+	model: DeviceModelId,
+	control: StreamDeckLcdSegmentControlDefinition,
+): {
+	columns: number[]
+	pixelSize: Dimension
+} {
+	if (model === DeviceModelId.GALLEON_K100) {
+		return {
+			columns: [0, 2],
+			pixelSize: {
+				width: control.pixelSize.width / 2,
+				height: control.pixelSize.height,
+			},
+		}
+	} else {
+		return {
+			columns: Array.from({ length: control.columnSpan }, (_, i) => control.column + i),
+			pixelSize: {
+				width: control.pixelSize.height, // Future: Support non-square segments
+				height: control.pixelSize.height,
+			},
+		}
+	}
 }

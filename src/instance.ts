@@ -15,6 +15,7 @@ import { setTimeout } from 'node:timers/promises'
 import { getControlId, getControlIdFromXy, matchOffsetByControlId } from './util.js'
 import { checkForFirmwareUpdatesForSurface } from './firmware.js'
 import { StreamDeckTcp } from '@elgato-stream-deck/tcp'
+import { getLcdCellSize } from './surface-schema.js'
 
 export class StreamDeckWrapper implements SurfaceInstance {
 	readonly #logger: ModuleLogger
@@ -57,6 +58,8 @@ export class StreamDeckWrapper implements SurfaceInstance {
 			context.keyUpById(getControlId(control))
 		})
 		this.#deck.on('rotate', (control, delta) => {
+			if (context.isLocked) return
+
 			if (delta < 0) {
 				context.rotateLeftById(getControlId(control))
 			} else if (delta > 0) {
@@ -231,14 +234,19 @@ export class StreamDeckWrapper implements SurfaceInstance {
 					return
 				}
 
-				const columnWidth = control.pixelSize.width / control.columnSpan
-				let drawX = drawColumn * columnWidth
-				if (this.#deck.MODEL === DeviceModelId.PLUS) {
-					// Position aligned with the buttons/encoders
-					drawX = drawColumn * 216.666 + 25
+				const { columns, pixelSize } = getLcdCellSize(this.#deck.MODEL, control)
+
+				const columnIndex = columns.indexOf(drawColumn)
+				if (columnIndex === -1) {
+					this.#logger.error(`Column ${drawColumn} not valid for controlId ${drawProps.controlId}`)
+					return
 				}
 
-				const targetSize = control.pixelSize.height
+				let drawX = columnIndex * pixelSize.width
+				if (this.#deck.MODEL === DeviceModelId.PLUS) {
+					// Position aligned with the buttons/encoders
+					drawX = columnIndex * 216.666 + 25
+				}
 
 				const maxAttempts = 3
 				for (let attempts = 1; attempts <= maxAttempts; attempts++) {
@@ -247,8 +255,8 @@ export class StreamDeckWrapper implements SurfaceInstance {
 
 						await this.#deck.fillLcdRegion(control.id, drawX, 0, drawProps.image, {
 							format: 'rgb',
-							width: targetSize,
-							height: targetSize,
+							width: pixelSize.width,
+							height: pixelSize.height,
 						})
 						return
 					} catch (e) {
@@ -266,6 +274,13 @@ export class StreamDeckWrapper implements SurfaceInstance {
 			if (signal.aborted) return
 
 			await this.#deck.setEncoderColor(control.index, color.r, color.g, color.b)
+		} else if (control.type === 'encoder' && control.ledRingSteps > 0) {
+			// no central led, but has a ring
+			const color = parseColor(drawProps.color)
+
+			if (signal.aborted) return
+
+			await this.#deck.setEncoderRingSingleColor(control.index, color.r, color.g, color.b)
 		}
 	}
 	async showStatus(signal: AbortSignal, cardGenerator: CardGenerator): Promise<void> {

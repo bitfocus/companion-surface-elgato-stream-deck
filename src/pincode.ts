@@ -115,6 +115,21 @@ export function generatePincodeMap(model: DeviceModelId): SurfacePincodeMap | nu
 				8: getControlIdFromXy(4, 0),
 				9: getControlIdFromXy(5, 0),
 			}
+		case DeviceModelId.GALLEON_K100:
+			return {
+				type: 'single-page',
+				pincode: getControlIdFromXy(0, 1),
+				0: getControlIdFromXy(1, 5),
+				1: getControlIdFromXy(0, 4),
+				2: getControlIdFromXy(1, 4),
+				3: getControlIdFromXy(2, 4),
+				4: getControlIdFromXy(0, 3),
+				5: getControlIdFromXy(1, 3),
+				6: getControlIdFromXy(2, 3),
+				7: getControlIdFromXy(0, 2),
+				8: getControlIdFromXy(1, 2),
+				9: getControlIdFromXy(2, 2),
+			}
 		default:
 			assertNever(model)
 			return null
