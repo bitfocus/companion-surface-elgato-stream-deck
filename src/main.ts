@@ -54,7 +54,7 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 		logger.debug(`Checked HID device: ${model ? model.productName : `Unknown Model (${sdInfo.model})`}`)
 
 		// Some models, don't have real serial numbers, so we fake them
-		const useFakeSerialNumber = sdInfo.model === DeviceModelId.GALLEON_K100
+		const useFakeSerialNumber = sdInfo.model === DeviceModelId.GALLEON_K100 && !!sdInfo.serialNumber.match(/^[0]+$/)
 		const serialNumber = useFakeSerialNumber ? DeviceModelId.GALLEON_K100 : sdInfo.serialNumber
 		const companyName = sdInfo.model === DeviceModelId.GALLEON_K100 ? 'Corsair' : 'Elgato'
 
