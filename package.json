@@ -32,16 +32,16 @@
 		"semver": "^7.7.3"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.5.0",
-		"@types/node": "^22.19.3",
+		"@companion-module/tools": "^2.6.1",
+		"@types/node": "^22.19.8",
 		"@types/semver": "^7.7.1",
 		"eslint": "^9.39.2",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.2.7",
-		"prettier": "^3.7.4",
+		"prettier": "^3.8.1",
 		"rimraf": "^6.1.2",
 		"typescript": "~5.9.3",
-		"typescript-eslint": "^8.50.0"
+		"typescript-eslint": "^8.54.0"
 	},
 	"prettier": "@companion-module/tools/.prettierrc.json",
 	"lint-staged": {
