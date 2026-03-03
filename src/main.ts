@@ -13,6 +13,7 @@ import {
 	openStreamDeck,
 	type StreamDeckDeviceInfo,
 } from '@elgato-stream-deck/node'
+// eslint-disable-next-line n/no-extraneous-import
 import { DEVICE_MODELS } from '@elgato-stream-deck/core'
 import { generatePincodeMap } from './pincode.js'
 import { StreamDeckWrapper } from './instance.js'
