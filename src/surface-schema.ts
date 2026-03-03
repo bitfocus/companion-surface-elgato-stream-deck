@@ -3,6 +3,7 @@ import { getControlId } from './util.js'
 import {
 	DeviceModelId,
 	Dimension,
+	StreamDeckControlDefinition,
 	StreamDeckLcdSegmentControlDefinition,
 	type StreamDeck,
 } from '@elgato-stream-deck/node'
@@ -79,11 +80,10 @@ export function createSurfaceSchema(deck: StreamDeck): SurfaceSchemaLayoutDefini
 				// Future: proper LED ring
 				break
 			case 'lcd-segment': {
-				const { columns, pixelSize } = getLcdCellSize(deck.MODEL, control)
+				const { columns, pixelSize } = getLcdCellSize(deck.MODEL, deck.CONTROLS, control)
 
 				if (columns.length === 0) break
 
-				// const width = control.pixelSize.width / control.columnSpan
 				const presetId = `lcd_${pixelSize.width}x${pixelSize.height}`
 				if (!surfaceLayout.stylePresets[presetId]) {
 					surfaceLayout.stylePresets[presetId] = {
@@ -117,6 +117,7 @@ export function createSurfaceSchema(deck: StreamDeck): SurfaceSchemaLayoutDefini
 
 export function getLcdCellSize(
 	model: DeviceModelId,
+	allControls: Readonly<StreamDeckControlDefinition[]>,
 	control: StreamDeckLcdSegmentControlDefinition,
 ): {
 	columns: number[]
@@ -132,7 +133,7 @@ export function getLcdCellSize(
 		}
 	} else {
 		return {
-			columns: Array.from({ length: control.columnSpan }, (_, i) => control.column + i),
+			columns: allControls.filter((c) => c.type === 'encoder').map((e) => e.column),
 			pixelSize: {
 				width: control.pixelSize.height, // Future: Support non-square segments
 				height: control.pixelSize.height,

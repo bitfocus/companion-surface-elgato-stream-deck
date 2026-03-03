@@ -84,6 +84,21 @@ export function generatePincodeMap(model: DeviceModelId): SurfacePincodeMap | nu
 				8: getControlIdFromXy(3, 1),
 				9: getControlIdFromXy(2, 2),
 			}
+		case DeviceModelId.PLUS_XL:
+			return {
+				type: 'single-page',
+				pincode: getControlIdFromXy(0, 4), // TODO - do this fancier with custom drawing?
+				0: getControlIdFromXy(4, 3),
+				1: getControlIdFromXy(3, 2),
+				2: getControlIdFromXy(4, 2),
+				3: getControlIdFromXy(5, 2),
+				4: getControlIdFromXy(3, 1),
+				5: getControlIdFromXy(4, 1),
+				6: getControlIdFromXy(5, 1),
+				7: getControlIdFromXy(3, 0),
+				8: getControlIdFromXy(4, 0),
+				9: getControlIdFromXy(5, 0),
+			}
 		case DeviceModelId.STUDIO:
 			return {
 				type: 'single-page',

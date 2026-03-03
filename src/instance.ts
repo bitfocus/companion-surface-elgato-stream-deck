@@ -10,7 +10,12 @@ import {
 	createModuleLogger,
 	ModuleLogger,
 } from '@companion-surface/base'
-import { DeviceModelId, StreamDeck, StreamDeckLcdSegmentControlDefinition } from '@elgato-stream-deck/node'
+import {
+	DeviceModelId,
+	StreamDeck,
+	StreamDeckEncoderControlDefinition,
+	StreamDeckLcdSegmentControlDefinition,
+} from '@elgato-stream-deck/node'
 import { setTimeout } from 'node:timers/promises'
 import { getControlId, getControlIdFromXy, matchOffsetByControlId } from './util.js'
 import { checkForFirmwareUpdatesForSurface } from './firmware.js'
@@ -80,12 +85,19 @@ export class StreamDeckWrapper implements SurfaceInstance {
 		})
 
 		const getLCDButton = (control: StreamDeckLcdSegmentControlDefinition, x: number) => {
+			let columns = new Array(control.columnSpan).fill(0).map((_, i) => i)
+			if (this.#deck.MODEL === DeviceModelId.PLUS_XL) {
+				// Align with the encoders
+				columns = this.#deck.CONTROLS.filter((c) => c.type === 'encoder').map((c) => c.column)
+				if (columns.length === 0) return control.column // Fallback
+			}
+
 			// Button assignment is very permissive, but maybe more compatible with the graphics overhaul?
 			// note: this doesn't take into account the SD Plus button offset, but that gives a little margin to the left, so maybe OK.
 			// TODO: reexamine when double-width buttons are implemented?
 			//   if using the margin, add Math.max(0, Math.min(control.columnSpan-1, ... ))
-			const columnOffset = Math.floor((x / control.pixelSize.width) * control.columnSpan)
-			return control.column + columnOffset
+			const columnOffset = Math.floor((x / control.pixelSize.width) * columns.length)
+			return control.column + columns[columnOffset]
 		}
 		this.#deck.on('lcdSwipe', (control, from, to) => {
 			if (context.isLocked) return
@@ -234,7 +246,7 @@ export class StreamDeckWrapper implements SurfaceInstance {
 					return
 				}
 
-				const { columns, pixelSize } = getLcdCellSize(this.#deck.MODEL, control)
+				const { columns, pixelSize } = getLcdCellSize(this.#deck.MODEL, this.#deck.CONTROLS, control)
 
 				const columnIndex = columns.indexOf(drawColumn)
 				if (columnIndex === -1) {
@@ -246,6 +258,17 @@ export class StreamDeckWrapper implements SurfaceInstance {
 				if (this.#deck.MODEL === DeviceModelId.PLUS) {
 					// Position aligned with the buttons/encoders
 					drawX = columnIndex * 216.666 + 25
+				} else if (this.#deck.MODEL === DeviceModelId.PLUS_XL) {
+					const matchingEncoder = this.#deck.CONTROLS.find(
+						(c): c is StreamDeckEncoderControlDefinition => c.type === 'encoder' && c.column === drawColumn,
+					)
+					if (!matchingEncoder) {
+						this.#logger.error(`Failed to find matching encoder for controlId ${drawProps.controlId}`)
+						return
+					}
+
+					// Position aligned with the buttons/encoders
+					drawX = matchingEncoder.index * 212 + 20
 				}
 
 				const maxAttempts = 3

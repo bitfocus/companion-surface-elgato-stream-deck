@@ -87,7 +87,7 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 		}
 
 		const configFields: SomeCompanionInputField[] = []
-		if (streamdeck.MODEL === DeviceModelId.PLUS) {
+		if (streamdeck.MODEL === DeviceModelId.PLUS || streamdeck.MODEL === DeviceModelId.PLUS_XL) {
 			configFields.push({
 				id: 'swipe_can_change_page',
 				label: 'Horizontal Swipe Changes Page',
