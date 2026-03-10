@@ -123,7 +123,7 @@ export class StreamDeckPluginRemoteService
 			id: 'address',
 			type: 'textinput',
 			label: 'IP Address',
-			default: new Date().toISOString(),
+			default: '',
 		},
 		{
 			id: 'port',
