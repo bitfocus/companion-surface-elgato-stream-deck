@@ -45,10 +45,16 @@ export class StreamDeckPluginRemoteService
 		this.#connectionManager.on('connected', (streamdeck) => {
 			this.#logger.debug(`StreamDeck connection opened: ${streamdeck.PRODUCT_NAME}. Retrieving serial number...`)
 
-			// TODO - this async feels unsafe...
+			// Not the cleanest, but make sure to not emit the `surfacesConnected` event if the streamdeck disconnects before we get the serial number (which can happen with network devices)
+			let disconnected = false
+			streamdeck.tcpEvents.once('disconnected', () => {
+				disconnected = true
+			})
+
 			streamdeck
 				.getSerialNumber()
 				.then((serial) => {
+					if (disconnected) return
 					this.#logger.info(`StreamDeck connected: ${streamdeck.PRODUCT_NAME} (${serial})`)
 					this.emit('surfacesConnected', [
 						{
