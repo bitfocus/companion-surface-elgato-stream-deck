@@ -90,6 +90,7 @@ export class StreamDeckPluginRemoteService
 				id: address,
 				displayName: primary.name,
 				description: primary.modelName,
+				addresses: address,
 				config: {
 					address: primary.address,
 					port: primary.port,
