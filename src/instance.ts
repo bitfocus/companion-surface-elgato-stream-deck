@@ -39,8 +39,6 @@ export class StreamDeckWrapper implements SurfaceInstance {
 	 */
 	#shouldCleanupOnQuit = true
 
-	#swipeToChangePage = false
-
 	public get surfaceId(): string {
 		return this.#surfaceId
 	}
@@ -117,7 +115,7 @@ export class StreamDeckWrapper implements SurfaceInstance {
 				} else {
 					context.rotateLeftById(controlId)
 				}
-			} else if (angle <= 22.5 && this.#swipeToChangePage) {
+			} else if (angle <= 22.5) {
 				// horizontal swipe, change pages: (note that the angle of the SD+ screen diagonal is 7 degrees, i.e. atan 1/8)
 				context.changePage(from.x > to.x) //swipe left moves to next page, as if your finger is moving a piece of paper under the screen
 			}
@@ -156,8 +154,8 @@ export class StreamDeckWrapper implements SurfaceInstance {
 		// Not used
 	}
 
-	async updateConfig(config: Record<string, any>): Promise<void> {
-		this.#swipeToChangePage = !!config.swipe_can_change_page
+	async updateConfig(_config: Record<string, any>): Promise<void> {
+		// Not used
 	}
 
 	async ready(): Promise<void> {}
