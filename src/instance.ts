@@ -97,6 +97,10 @@ export class StreamDeckWrapper implements SurfaceInstance {
 			const columnOffset = Math.floor((x / control.pixelSize.width) * columns.length)
 			return control.column + columns[columnOffset]
 		}
+		this.#deck.on('nfcRead', (tag) => {
+			context.sendVariableValue('nfc', tag)
+		})
+
 		this.#deck.on('lcdSwipe', (control, from, to) => {
 			if (context.isLocked) return
 

@@ -93,7 +93,19 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 				surfaceLayout: createSurfaceSchema(streamdeck),
 				pincodeMap: generatePincodeMap(streamdeck.MODEL),
 				configFields: null,
-				canChangePage: { label: 'Horizontal Swipe Changes Page' },
+				transferVariables: streamdeck.HAS_NFC_READER
+					? [
+							{
+								id: 'nfc',
+								type: 'input',
+								name: 'Last read NFC tag',
+							},
+						]
+					: undefined,
+				canChangePage:
+					streamdeck.MODEL === DeviceModelId.PLUS_XL || streamdeck.MODEL === DeviceModelId.PLUS
+						? { label: 'Horizontal Swipe Changes Page' }
+						: undefined,
 				location: pluginInfo.type === 'remote' ? pluginInfo.streamdeck.remoteAddress : null,
 			},
 		}
