@@ -2,8 +2,9 @@ import { assertNever, HostCapabilities, SurfaceSchemaLayoutDefinition } from '@c
 import { getControlId } from './util.js'
 import {
 	DeviceModelId,
-	Dimension,
-	StreamDeckLcdSegmentControlDefinition,
+	type Dimension,
+	type StreamDeckControlDefinition,
+	type StreamDeckLcdSegmentControlDefinition,
 	type StreamDeck,
 } from '@elgato-stream-deck/node'
 
@@ -79,7 +80,7 @@ export function createSurfaceSchema(capabilities: HostCapabilities, deck: Stream
 				// Future: proper LED ring
 				break
 			case 'lcd-segment': {
-				const { columns, pixelSize } = getLcdCellSize(capabilities, deck.MODEL, control)
+				const { columns, pixelSize } = getLcdCellSize(capabilities, deck.MODEL, deck.CONTROLS, control)
 
 				if (columns.length === 0) break
 
@@ -117,6 +118,7 @@ export function createSurfaceSchema(capabilities: HostCapabilities, deck: Stream
 export function getLcdCellSize(
 	capabilities: HostCapabilities,
 	model: DeviceModelId,
+	allControls: Readonly<StreamDeckControlDefinition[]>,
 	control: StreamDeckLcdSegmentControlDefinition,
 ): {
 	columns: number[]
@@ -141,12 +143,14 @@ export function getLcdCellSize(
 	}
 
 	// Split the control into cells based on the columns
-	const columns = new Array(control.columnSpan).fill(0).map((_, i) => i)
+	let columns = allControls.filter((c) => c.type === 'encoder').map((e) => e.column)
+	if (columns.length === 0) columns = new Array(control.columnSpan).fill(0).map((_, i) => i)
+
 	return {
 		columns: columns,
 		pixelSize: {
 			width: capabilities.supportsNonSquareButtons
-				? control.pixelSize.width / columns.length
+				? Math.floor(control.pixelSize.width / columns.length)
 				: control.pixelSize.height, // Support non-square segments
 			height: control.pixelSize.height,
 		},

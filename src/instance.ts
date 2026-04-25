@@ -248,7 +248,12 @@ export class StreamDeckWrapper implements SurfaceInstance {
 					return
 				}
 
-				const { columns, pixelSize } = getLcdCellSize(this.#context.capabilities, this.#deck.MODEL, control)
+				const { columns, pixelSize } = getLcdCellSize(
+					this.#context.capabilities,
+					this.#deck.MODEL,
+					this.#deck.CONTROLS,
+					control,
+				)
 
 				const columnIndex = columns.indexOf(drawColumn)
 				if (columnIndex === -1) {
