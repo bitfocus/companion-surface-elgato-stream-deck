@@ -90,7 +90,7 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 			surface: new StreamDeckWrapper(surfaceId, streamdeck, context),
 			registerProps: {
 				brightness: streamdeck.MODEL !== DeviceModelId.PEDAL,
-				surfaceLayout: createSurfaceSchema(streamdeck),
+				surfaceLayout: createSurfaceSchema(context.capabilities, streamdeck),
 				pincodeMap: generatePincodeMap(streamdeck.MODEL),
 				configFields: null,
 				transferVariables: streamdeck.HAS_NFC_READER

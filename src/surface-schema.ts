@@ -1,14 +1,13 @@
-import { assertNever, SurfaceSchemaLayoutDefinition } from '@companion-surface/base'
+import { assertNever, HostCapabilities, SurfaceSchemaLayoutDefinition } from '@companion-surface/base'
 import { getControlId } from './util.js'
 import {
 	DeviceModelId,
 	Dimension,
-	StreamDeckControlDefinition,
 	StreamDeckLcdSegmentControlDefinition,
 	type StreamDeck,
 } from '@elgato-stream-deck/node'
 
-export function createSurfaceSchema(deck: StreamDeck): SurfaceSchemaLayoutDefinition {
+export function createSurfaceSchema(capabilities: HostCapabilities, deck: StreamDeck): SurfaceSchemaLayoutDefinition {
 	const surfaceLayout: SurfaceSchemaLayoutDefinition = {
 		stylePresets: {
 			default: {
@@ -80,7 +79,7 @@ export function createSurfaceSchema(deck: StreamDeck): SurfaceSchemaLayoutDefini
 				// Future: proper LED ring
 				break
 			case 'lcd-segment': {
-				const { columns, pixelSize } = getLcdCellSize(deck.MODEL, deck.CONTROLS, control)
+				const { columns, pixelSize } = getLcdCellSize(capabilities, deck.MODEL, control)
 
 				if (columns.length === 0) break
 
@@ -116,13 +115,21 @@ export function createSurfaceSchema(deck: StreamDeck): SurfaceSchemaLayoutDefini
 }
 
 export function getLcdCellSize(
+	capabilities: HostCapabilities,
 	model: DeviceModelId,
-	allControls: Readonly<StreamDeckControlDefinition[]>,
 	control: StreamDeckLcdSegmentControlDefinition,
 ): {
 	columns: number[]
 	pixelSize: Dimension
 } {
+	if (!control.drawRegions) {
+		// Control can't be split into cells, so treat as a single cell
+		return {
+			columns: capabilities.supportsNonSquareButtons ? [0] : [],
+			pixelSize: control.pixelSize,
+		}
+	}
+
 	if (model === DeviceModelId.GALLEON_K100) {
 		return {
 			columns: [0, 2],
@@ -131,13 +138,17 @@ export function getLcdCellSize(
 				height: control.pixelSize.height,
 			},
 		}
-	} else {
-		return {
-			columns: allControls.filter((c) => c.type === 'encoder').map((e) => e.column),
-			pixelSize: {
-				width: control.pixelSize.height, // Future: Support non-square segments
-				height: control.pixelSize.height,
-			},
-		}
+	}
+
+	// Split the control into cells based on the columns
+	const columns = new Array(control.columnSpan).fill(0).map((_, i) => i)
+	return {
+		columns: columns,
+		pixelSize: {
+			width: capabilities.supportsNonSquareButtons
+				? control.pixelSize.width / columns.length
+				: control.pixelSize.height, // Support non-square segments
+			height: control.pixelSize.height,
+		},
 	}
 }

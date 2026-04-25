@@ -248,7 +248,7 @@ export class StreamDeckWrapper implements SurfaceInstance {
 					return
 				}
 
-				const { columns, pixelSize } = getLcdCellSize(this.#deck.MODEL, this.#deck.CONTROLS, control)
+				const { columns, pixelSize } = getLcdCellSize(this.#context.capabilities, this.#deck.MODEL, control)
 
 				const columnIndex = columns.indexOf(drawColumn)
 				if (columnIndex === -1) {
@@ -257,20 +257,22 @@ export class StreamDeckWrapper implements SurfaceInstance {
 				}
 
 				let drawX = columnIndex * pixelSize.width
-				if (this.#deck.MODEL === DeviceModelId.PLUS) {
-					// Position aligned with the buttons/encoders
-					drawX = columnIndex * 216.666 + 25
-				} else if (this.#deck.MODEL === DeviceModelId.PLUS_XL) {
-					const matchingEncoder = this.#deck.CONTROLS.find(
-						(c): c is StreamDeckEncoderControlDefinition => c.type === 'encoder' && c.column === drawColumn,
-					)
-					if (!matchingEncoder) {
-						this.#logger.error(`Failed to find matching encoder for controlId ${drawProps.controlId}`)
-						return
-					}
+				if (!this.#context.capabilities.supportsNonSquareButtons) {
+					if (this.#deck.MODEL === DeviceModelId.PLUS) {
+						// Position aligned with the buttons/encoders
+						drawX = columnIndex * 216.666 + 25
+					} else if (this.#deck.MODEL === DeviceModelId.PLUS_XL) {
+						const matchingEncoder = this.#deck.CONTROLS.find(
+							(c): c is StreamDeckEncoderControlDefinition => c.type === 'encoder' && c.column === drawColumn,
+						)
+						if (!matchingEncoder) {
+							this.#logger.error(`Failed to find matching encoder for controlId ${drawProps.controlId}`)
+							return
+						}
 
-					// Position aligned with the buttons/encoders
-					drawX = matchingEncoder.index * 212 + 20
+						// Position aligned with the buttons/encoders
+						drawX = matchingEncoder.index * 212 + 20
+					}
 				}
 
 				const maxAttempts = 3
@@ -286,7 +288,25 @@ export class StreamDeckWrapper implements SurfaceInstance {
 						return
 					} catch (e) {
 						if (attempts == maxAttempts) {
-							this.#logger.error(`fillImage of ${drawProps.controlId} failed after ${attempts}: ${e}`)
+							this.#logger.error(`fillLcdRegion of ${drawProps.controlId} failed after ${attempts}: ${e}`)
+							return
+						}
+						await setTimeout(20, { signal })
+					}
+				}
+			} else {
+				const maxAttempts = 3
+				for (let attempts = 1; attempts <= maxAttempts; attempts++) {
+					try {
+						if (signal.aborted) return
+
+						await this.#deck.fillLcd(control.id, drawProps.image, {
+							format: 'rgb',
+						})
+						return
+					} catch (e) {
+						if (attempts == maxAttempts) {
+							this.#logger.error(`fillLcd of ${drawProps.controlId} failed after ${attempts}: ${e}`)
 							return
 						}
 						await setTimeout(20, { signal })
