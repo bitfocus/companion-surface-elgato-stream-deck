@@ -42,6 +42,10 @@ export class StreamDeckPluginRemoteService
 	constructor() {
 		super()
 
+		this.#connectionManager.on('error', (error) => {
+			this.#logger.error(`Connection error: ${error}`)
+		})
+
 		this.#connectionManager.on('connected', (streamdeck) => {
 			this.#logger.debug(`StreamDeck connection opened: ${streamdeck.PRODUCT_NAME}. Retrieving serial number...`)
 
