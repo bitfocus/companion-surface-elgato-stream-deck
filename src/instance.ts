@@ -70,14 +70,10 @@ export class StreamDeckWrapper implements SurfaceInstance {
 			}
 		})
 		this.#deck.on('lcdShortPress', (control, position) => {
-			if (context.isLocked) return
-
 			const column = getLCDButton(control, position.x)
 			context.keyDownUpById(getControlIdFromXy(column, control.row))
 		})
 		this.#deck.on('lcdLongPress', (control, position) => {
-			if (context.isLocked) return
-
 			const column = getLCDButton(control, position.x)
 			context.keyDownUpById(getControlIdFromXy(column, control.row))
 		})
