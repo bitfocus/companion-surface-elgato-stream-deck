@@ -53,51 +53,51 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@elgato-stream-deck/core@npm:7.6.2":
-  version: 7.6.2
-  resolution: "@elgato-stream-deck/core@npm:7.6.2"
+"@elgato-stream-deck/core@npm:7.6.3":
+  version: 7.6.3
+  resolution: "@elgato-stream-deck/core@npm:7.6.3"
   dependencies:
     eventemitter3: "npm:^5.0.4"
     tslib: "npm:^2.8.1"
-  checksum: 10c0/fa583017e179a2217c09e099ce856bc105123003a608c8e6ffcb7a09a10d51db3cea5634cafcbd4ea24367e18e58d0c754e5e84350e34e6ef303f52ff1beb530
+  checksum: 10c0/8c08965de9ce0c38db92bce8e37f708853567a9f4ad44da39b87e7fad0da8803c02424cf8f12fb7954674e5939da4e376d9ef0d0235dd18d66576fb97f66a9ef
   languageName: node
   linkType: hard
 
-"@elgato-stream-deck/node-lib@npm:7.6.2":
-  version: 7.6.2
-  resolution: "@elgato-stream-deck/node-lib@npm:7.6.2"
+"@elgato-stream-deck/node-lib@npm:7.6.3":
+  version: 7.6.3
+  resolution: "@elgato-stream-deck/node-lib@npm:7.6.3"
   dependencies:
     jpeg-js: "npm:^0.4.4"
     tslib: "npm:^2.8.1"
   peerDependencies:
     "@julusian/jpeg-turbo": ^1.1.2 || ^2.0.0 || ^3.0.0
-  checksum: 10c0/5ecf217a92e9d6b4141bcad889be92fb201be5f301cd66a2b6da202aa2fc04e7aa9985fe22e5626c43cf6f0ff9a5e7fee95c9db88265b4b8f247071aacfebc62
+  checksum: 10c0/adc0f5c3ebd692776a603337e30173e905b0f70eb414ec0e571fea542bad40656d571300a9b8eced41304f2203d578e9d6588886a5e4fc444ea867fc1aca9cb3
   languageName: node
   linkType: hard
 
-"@elgato-stream-deck/node@npm:^7.6.2":
-  version: 7.6.2
-  resolution: "@elgato-stream-deck/node@npm:7.6.2"
+"@elgato-stream-deck/node@npm:^7.6.3":
+  version: 7.6.3
+  resolution: "@elgato-stream-deck/node@npm:7.6.3"
   dependencies:
-    "@elgato-stream-deck/core": "npm:7.6.2"
-    "@elgato-stream-deck/node-lib": "npm:7.6.2"
+    "@elgato-stream-deck/core": "npm:7.6.3"
+    "@elgato-stream-deck/node-lib": "npm:7.6.3"
     eventemitter3: "npm:^5.0.4"
     node-hid: "npm:^3.2.0"
     p-queue: "npm:^6.6.2"
     tslib: "npm:^2.8.1"
-  checksum: 10c0/40658e75131a8c6ac40a7e9f2a9328289271527eb08127f3e01e1ed1414d91cdfe9d80a773b97e47e4d85bc7efbee1b19962a3507561afd41262ce10d288ecf8
+  checksum: 10c0/539a832ac8a89fa0c9f5a051dfc74642e4da0b72a60af08671cf36f7f75a2ab094e4eb69e14feadf9217d07feffede7c99ce8dd8afcc40338b722a41d29c7959
   languageName: node
   linkType: hard
 
-"@elgato-stream-deck/tcp@npm:^7.6.2":
-  version: 7.6.2
-  resolution: "@elgato-stream-deck/tcp@npm:7.6.2"
+"@elgato-stream-deck/tcp@npm:^7.6.3":
+  version: 7.6.3
+  resolution: "@elgato-stream-deck/tcp@npm:7.6.3"
   dependencies:
-    "@elgato-stream-deck/core": "npm:7.6.2"
-    "@elgato-stream-deck/node-lib": "npm:7.6.2"
+    "@elgato-stream-deck/core": "npm:7.6.3"
+    "@elgato-stream-deck/node-lib": "npm:7.6.3"
     "@julusian/bonjour-service": "npm:^1.4.2"
     tslib: "npm:^2.8.1"
-  checksum: 10c0/ec49cb41d94ff74693f1cb48b490bf8dba4ecde4292f2e132260182a251443ad54d783e10d714f5fa43fc3967b4f331034377e9aea83e4cecc6ebd8233a245b4
+  checksum: 10c0/47af06258496b2155a1e55e28fdc60cdf15ba27ae07b4d8db99502a7e89794da270bc97dbd421c2d4b9a6b9a9f898627b2a2584144e519cc90358db02fe3cc80
   languageName: node
   linkType: hard
 
@@ -748,21 +748,21 @@ __metadata:
   linkType: hard
 
 "brace-expansion@npm:^1.1.7":
-  version: 1.1.12
-  resolution: "brace-expansion@npm:1.1.12"
+  version: 1.1.15
+  resolution: "brace-expansion@npm:1.1.15"
   dependencies:
     balanced-match: "npm:^1.0.0"
     concat-map: "npm:0.0.1"
-  checksum: 10c0/975fecac2bb7758c062c20d0b3b6288c7cc895219ee25f0a64a9de662dbac981ff0b6e89909c3897c1f84fa353113a721923afdec5f8b2350255b097f12b1f73
+  checksum: 10c0/648e273f57cfa9ed67d8a77bdb15b408205465d33da9331808ee3c188d8b55674c9cdbf1f320b65bc562e485e1263360ae62ad355e128e0435891f6430e795d7
   languageName: node
   linkType: hard
 
 "brace-expansion@npm:^5.0.2":
-  version: 5.0.4
-  resolution: "brace-expansion@npm:5.0.4"
+  version: 5.0.6
+  resolution: "brace-expansion@npm:5.0.6"
   dependencies:
     balanced-match: "npm:^4.0.2"
-  checksum: 10c0/359cbcfa80b2eb914ca1f3440e92313fbfe7919ee6b274c35db55bec555aded69dac5ee78f102cec90c35f98c20fa43d10936d0cd9978158823c249257e1643a
+  checksum: 10c0/8c919869b90f61d533b341d3340be5ee4413232ea89b8246cbc2f38eb014f1d8182785c98a006eaf6111d02dc9eeffefdc240d5ac158625b2ed084dccd4bbf9b
   languageName: node
   linkType: hard
 
@@ -880,14 +880,14 @@ __metadata:
   dependencies:
     "@companion-module/tools": "npm:^3.0.1"
     "@companion-surface/base": "npm:~1.2.1"
-    "@elgato-stream-deck/node": "npm:^7.6.2"
-    "@elgato-stream-deck/tcp": "npm:^7.6.2"
+    "@elgato-stream-deck/node": "npm:^7.6.3"
+    "@elgato-stream-deck/tcp": "npm:^7.6.3"
     "@julusian/jpeg-turbo": "npm:^3.0.1"
     "@types/node": "npm:^22.19.19"
     "@types/semver": "npm:^7.7.1"
     eslint: "npm:^9.39.4"
     husky: "npm:^9.1.7"
-    lint-staged: "npm:^17.0.5"
+    lint-staged: "npm:^17.0.6"
     nanoid: "npm:^5.1.11"
     prettier: "npm:^3.8.3"
     rimraf: "npm:^6.1.3"
@@ -1700,21 +1700,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^17.0.5":
-  version: 17.0.5
-  resolution: "lint-staged@npm:17.0.5"
+"lint-staged@npm:^17.0.6":
+  version: 17.0.6
+  resolution: "lint-staged@npm:17.0.6"
   dependencies:
     listr2: "npm:^10.2.1"
     picomatch: "npm:^4.0.4"
     string-argv: "npm:^0.3.2"
-    tinyexec: "npm:^1.1.2"
-    yaml: "npm:^2.8.4"
+    tinyexec: "npm:1.2.2"
+    yaml: "npm:^2.9.0"
   dependenciesMeta:
     yaml:
       optional: true
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 10c0/6ecf2024744147ea768dbd550c0c47f04b295f07d30e5ecb5e375c18d8fc24d4bfa897042f4aabd7c3510054ad5bbbb51fa36e60e8dca853e31f9876ef9a3726
+  checksum: 10c0/9defc7020b890d745f7623d68863831fc72b242ca2b818e81e22d2203b304001470779a5c7eaa0d1bbbbf6a967a78b84a3f54107f42f2e41cd69497b2c14cbe9
   languageName: node
   linkType: hard
 
@@ -2475,7 +2475,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyexec@npm:^1.1.2":
+"tinyexec@npm:1.2.2":
   version: 1.2.2
   resolution: "tinyexec@npm:1.2.2"
   checksum: 10c0/8bcb4969c572c21d570c033e29cb896e26d96e49e58f4fe07a532d3d65e10bdfae59733bf8a6a0fd9b611543c4ed3b890c939c3234489599296fb92515eb4625
@@ -2701,7 +2701,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml@npm:^2.8.4":
+"yaml@npm:^2.9.0":
   version: 2.9.0
   resolution: "yaml@npm:2.9.0"
   bin:
