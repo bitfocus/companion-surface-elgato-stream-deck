@@ -10,8 +10,11 @@ We currently support the following models:
 - Stream Deck Mk2
 - Stream Deck Pedal
 - Stream Deck +
+- Stream Deck + XL
 - Stream Deck Neo
 - Stream Deck Studio
+- Stream Deck Module 6/15/32
+- Corsair Galleon 100 SD
 
 Occasionally Elgato releases new revisions without notice, so some new devices may not work immediately.
 
