@@ -17,7 +17,7 @@ const LATEST_FIRMWARE_VERSIONS: FirmwareVersionInfo[] = [
 		// Studio
 		productIds: [0x00aa],
 		versions: {
-			AP2: '1.05.012',
+			AP2: '2.01.002',
 			ENCODER_AP2: '1.01.012',
 			ENCODER_LD: '1.01.006',
 		},
