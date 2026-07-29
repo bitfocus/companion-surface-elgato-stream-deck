@@ -22,9 +22,19 @@ const LATEST_FIRMWARE_VERSIONS: FirmwareVersionInfo[] = [
 			ENCODER_LD: '1.01.006',
 		},
 	},
+	{
+		// Network dock
+		productIds: [0xffff],
+		versions: {
+			AP2: '1.01.016',
+		},
+	},
 ]
 
-const STREAMDECK_MODULES_SUPPORTING_UPDATES: ReadonlySet<DeviceModelId> = new Set([DeviceModelId.STUDIO])
+const STREAMDECK_MODULES_SUPPORTING_UPDATES: ReadonlySet<DeviceModelId> = new Set([
+	DeviceModelId.STUDIO,
+	DeviceModelId.NETWORK_DOCK,
+])
 const STREAMDECK_UPDATE_DOWNLOAD_URL = 'https://api.bitfocus.io/v1/product/elgato-updater/download'
 const STREAMDECK_UPDATE_VERSIONS_URL = 'https://api.bitfocus.io/v1/product/elgato-updater/versions'
 
