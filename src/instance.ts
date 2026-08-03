@@ -82,11 +82,7 @@ export class StreamDeckWrapper implements SurfaceInstance {
 		this.#deck.on('rotate', (control, delta) => {
 			if (context.isLocked) return
 
-			if (delta < 0) {
-				context.rotateLeftById(getControlId(control))
-			} else if (delta > 0) {
-				context.rotateRightById(getControlId(control))
-			}
+			context.rotateById(getControlId(control), delta)
 		})
 		this.#deck.on('lcdShortPress', (control, position) => {
 			const column = getLCDButton(control, position.x)

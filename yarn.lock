@@ -44,10 +44,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@companion-surface/base@npm:1.3.0-nightly-main-20260713-213316-a42afb9":
-  version: 1.3.0-nightly-main-20260713-213316-a42afb9
-  resolution: "@companion-surface/base@npm:1.3.0-nightly-main-20260713-213316-a42afb9"
-  checksum: 10c0/4932a44a2f6183d7f31179db8dcb9fcc7285a222fac524168b2337ac520e1434c497ad4fa8d7d40895dc73263fb3f202fe4e8f2ade0dec07dc05967ed60320b0
+"@companion-surface/base@npm:1.4.0-nightly-main-20260802-210833-c2d781c":
+  version: 1.4.0-nightly-main-20260802-210833-c2d781c
+  resolution: "@companion-surface/base@npm:1.4.0-nightly-main-20260802-210833-c2d781c"
+  checksum: 10c0/4d40cace3da97e4e0a83774f946bb3d3ec94f0631c5492a5e38c38a2466ba7d226e136312084b1825a302306a36f41db36b03fb78aaaa7954dfd237bb16732e6
   languageName: node
   linkType: hard
 
@@ -831,7 +831,7 @@ __metadata:
   resolution: "companion-surface-elgato-stream-deck@workspace:."
   dependencies:
     "@companion-module/tools": "npm:^3.0.2"
-    "@companion-surface/base": "npm:1.3.0-nightly-main-20260713-213316-a42afb9"
+    "@companion-surface/base": "npm:1.4.0-nightly-main-20260802-210833-c2d781c"
     "@elgato-stream-deck/node": "npm:^7.6.3"
     "@elgato-stream-deck/tcp": "npm:^7.6.3"
     "@julusian/jpeg-turbo": "npm:^3.0.1"
