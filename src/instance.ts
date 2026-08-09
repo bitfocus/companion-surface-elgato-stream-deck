@@ -20,7 +20,26 @@ import { setTimeout } from 'node:timers/promises'
 import { getControlId, getControlIdFromXy, matchOffsetByControlId } from './util.js'
 import { checkForFirmwareUpdatesForSurface } from './firmware.js'
 import { StreamDeckTcp } from '@elgato-stream-deck/tcp'
-import { getLcdCellSize } from './surface-schema.js'
+import { getLcdCellSize, MIN_LED_RING_STEPS } from './surface-schema.js'
+
+/**
+ * Perceptual gamma curve for the encoder LED rings.
+ *
+ * The LEDs are near-linear in drive but the eye's brightness response is a power law, so
+ * perceived brightness saturates quickly - 70% and 100% look nearly identical, while the only
+ * visibly-dim values live in the bottom 1-2%. Remapping each 8-bit value through `(v/255)^gamma`
+ * spreads the perceptual range across the whole slider: the top separates out, and a faintly-lit
+ * "track" now sits at a usable Companion percentage instead of 1%.
+ *
+ * 0% stays off and 100% stays full brightness - only the values in between are pulled down.
+ *
+ * - LED_GAMMA: higher = more separation at the top / dimmer mids. 2.2 mild, 3.0 aggressive.
+ */
+const LED_GAMMA = 2.5
+const LED_GAMMA_LUT = new Uint8Array(256)
+for (let i = 0; i < 256; i++) {
+	LED_GAMMA_LUT[i] = Math.round(255 * Math.pow(i / 255, LED_GAMMA))
+}
 
 export class StreamDeckWrapper implements SurfaceInstance {
 	readonly #logger: ModuleLogger
@@ -63,11 +82,7 @@ export class StreamDeckWrapper implements SurfaceInstance {
 		this.#deck.on('rotate', (control, delta) => {
 			if (context.isLocked) return
 
-			if (delta < 0) {
-				context.rotateLeftById(getControlId(control))
-			} else if (delta > 0) {
-				context.rotateRightById(getControlId(control))
-			}
+			context.rotateById(getControlId(control), delta)
 		})
 		this.#deck.on('lcdShortPress', (control, position) => {
 			const column = getLCDButton(control, position.x)
@@ -314,19 +329,44 @@ export class StreamDeckWrapper implements SurfaceInstance {
 					}
 				}
 			}
-		} else if (control.type === 'encoder' && control.hasLed) {
-			const color = parseColor(drawProps.color)
+		} else if (control.type === 'encoder') {
+			if (control.hasLed) {
+				const color = parseColor(drawProps.color)
+
+				if (signal.aborted) return
+
+				await this.#deck.setEncoderColor(control.index, color.r, color.g, color.b)
+			}
 
 			if (signal.aborted) return
 
-			await this.#deck.setEncoderColor(control.index, color.r, color.g, color.b)
-		} else if (control.type === 'encoder' && control.ledRingSteps > 0) {
-			// no central led, but has a ring
-			const color = parseColor(drawProps.color)
+			if (control.ledRingSteps >= MIN_LED_RING_STEPS) {
+				if (drawProps.leds) {
+					// Rearrange the buffer to change the midpoint
+					const colorsBuffer = new Uint8Array(drawProps.leds.length)
+					const cutPoint = 13 * 3 // Something seems to be off, or maybe just being confusing
+					colorsBuffer.set(drawProps.leds.slice(cutPoint), 0)
+					colorsBuffer.set(drawProps.leds.slice(0, cutPoint), drawProps.leds.length - cutPoint)
 
-			if (signal.aborted) return
+					// Apply perceptual gamma curve for better contrast across the range
+					for (let i = 0; i < colorsBuffer.length; i++) {
+						colorsBuffer[i] = LED_GAMMA_LUT[colorsBuffer[i]]
+					}
 
-			await this.#deck.setEncoderRingSingleColor(control.index, color.r, color.g, color.b)
+					// Draw it
+					await this.#deck.setEncoderRingColors(control.index, colorsBuffer)
+				} else {
+					// No colours, so blank it
+					await this.#deck.setEncoderRingSingleColor(control.index, 0, 0, 0)
+				}
+			} else if (control.ledRingSteps > 0) {
+				// A coarse ring, treat it as a single led
+				const color = parseColor(drawProps.color)
+
+				if (signal.aborted) return
+
+				await this.#deck.setEncoderRingSingleColor(control.index, color.r, color.g, color.b)
+			}
 		}
 	}
 	async showStatus(signal: AbortSignal, cardGenerator: CardGenerator): Promise<void> {

@@ -8,6 +8,11 @@ import {
 	type StreamDeck,
 } from '@elgato-stream-deck/node'
 
+/**
+ * The minimum number of led ring steps to do the full mode, rather than single colour
+ */
+export const MIN_LED_RING_STEPS = 6
+
 export function createSurfaceSchema(capabilities: HostCapabilities, deck: StreamDeck): SurfaceSchemaLayoutDefinition {
 	const surfaceLayout: SurfaceSchemaLayoutDefinition = {
 		stylePresets: {
@@ -63,21 +68,36 @@ export function createSurfaceSchema(capabilities: HostCapabilities, deck: Stream
 				}
 				break
 			case 'encoder':
-				// Note: treat the galleon k100 led ring as a single color for now
-				if (control.hasLed || control.ledRingSteps > 0) {
+				if (control.hasLed || control.ledRingSteps) {
+					const presetId = `enc_${control.ledRingSteps}x${control.hasLed}`
+					if (!surfaceLayout.stylePresets[presetId]) {
+						surfaceLayout.stylePresets[presetId] = {
+							colors: control.hasLed || control.ledRingSteps < MIN_LED_RING_STEPS ? 'hex' : undefined,
+							leds:
+								control.ledRingSteps >= MIN_LED_RING_STEPS
+									? {
+											mode: 'full-ring',
+											segments: control.ledRingSteps,
+										}
+									: undefined,
+						}
+					}
+
+					// Full encoder
 					surfaceLayout.controls[controlId] = {
 						row: control.row,
 						column: control.column,
-						stylePreset: 'rgb',
+						stylePreset: presetId,
 					}
 				} else {
+					// Fallback basic
 					surfaceLayout.controls[controlId] = {
 						row: control.row,
 						column: control.column,
 						stylePreset: 'empty',
 					}
 				}
-				// Future: proper LED ring
+
 				break
 			case 'lcd-segment': {
 				const { columns, pixelSize } = getLcdCellSize(capabilities, deck.MODEL, deck.CONTROLS, control)
