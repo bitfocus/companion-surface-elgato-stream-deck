@@ -1,5 +1,6 @@
 import {
 	createModuleLogger,
+	SurfaceModelDefinition,
 	type DiscoveredSurfaceInfo,
 	type HIDDevice,
 	type OpenSurfaceResult,
@@ -13,7 +14,7 @@ import {
 	type StreamDeckDeviceInfo,
 } from '@elgato-stream-deck/node'
 // eslint-disable-next-line n/no-extraneous-import
-import { DEVICE_MODELS } from '@elgato-stream-deck/core'
+import { DEVICE_MODEL_INFO } from '@elgato-stream-deck/core'
 import { generatePincodeMap } from './pincode.js'
 import { StreamDeckWrapper } from './instance.js'
 import { createSurfaceSchema } from './surface-schema.js'
@@ -47,23 +48,56 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 		await remoteService.destroy()
 	},
 
+	getSurfaceModels: async (ctx): Promise<SurfaceModelDefinition[]> => {
+		const models: SurfaceModelDefinition[] = []
+
+		for (const model of Object.values(DEVICE_MODEL_INFO)) {
+			if (!model) continue
+
+			let name = model.name
+
+			switch (model.id) {
+				// Skip a few models that are identical to others, so are just noise
+				case DeviceModelId.ORIGINALV2:
+				case DeviceModelId.ORIGINALMK2:
+				case DeviceModelId.ORIGINALMK2SCISSOR:
+				case DeviceModelId.MODULE6:
+				case DeviceModelId.MODULE15:
+				case DeviceModelId.MODULE32:
+				case DeviceModelId.NETWORK_DOCK:
+					continue
+				// Mangle names of some models for clarity
+				case DeviceModelId.ORIGINAL:
+					name = 'Stream Deck (15 key)'
+					break
+			}
+
+			models.push({
+				id: model.id,
+				name: name,
+				// Add any other properties as needed
+				layout: createSurfaceSchema(ctx.capabilities, model),
+			})
+		}
+
+		return models
+	},
+
 	checkSupportsHidDevice: (device: HIDDevice): DiscoveredSurfaceInfo<SomeStreamDeckDeviceInfo> | null => {
 		const sdInfo = getStreamDeckDeviceInfo(device)
 		if (!sdInfo || !sdInfo.serialNumber) return null
 
-		const model = DEVICE_MODELS.find((m) => m.id === sdInfo.model)
-
-		logger.debug(`Checked HID device: ${model ? model.productName : `Unknown Model (${sdInfo.model})`}`)
+		logger.debug(`Checked HID device: ${sdInfo.modelInfo.name}`)
 
 		// Some models, don't have real serial numbers, so we fake them
-		const useFakeSerialNumber = sdInfo.model === DeviceModelId.GALLEON_K100 && !!sdInfo.serialNumber.match(/^[0]+$/)
+		const useFakeSerialNumber =
+			sdInfo.modelInfo.id === DeviceModelId.GALLEON_K100 && !!sdInfo.serialNumber.match(/^[0]+$/)
 		const serialNumber = useFakeSerialNumber ? DeviceModelId.GALLEON_K100 : sdInfo.serialNumber
-		const companyName = sdInfo.model === DeviceModelId.GALLEON_K100 ? 'Corsair' : 'Elgato'
 
 		return {
 			surfaceId: `streamdeck:${serialNumber}`,
 			surfaceIdIsNotUnique: useFakeSerialNumber,
-			description: model ? `${companyName} ${model.productName}` : `${companyName} Stream Deck (${sdInfo.model})`,
+			description: `${sdInfo.modelInfo.manufacturer} ${sdInfo.modelInfo.name}`,
 			pluginInfo: { type: 'local', ...sdInfo },
 		}
 	},
@@ -96,11 +130,12 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 		return {
 			surface: new StreamDeckWrapper(surfaceId, streamdeck, context),
 			registerProps: {
-				brightness: streamdeck.MODEL !== DeviceModelId.PEDAL,
-				surfaceLayout: createSurfaceSchema(context.capabilities, streamdeck),
-				pincodeMap: generatePincodeMap(streamdeck.MODEL),
+				brightness: streamdeck.modelInfo.id !== DeviceModelId.PEDAL,
+				surfaceLayout: createSurfaceSchema(context.capabilities, streamdeck.modelInfo),
+				surfaceAppearance: null,
+				pincodeMap: generatePincodeMap(streamdeck.modelInfo.id),
 				configFields: null,
-				transferVariables: streamdeck.HAS_NFC_READER
+				transferVariables: streamdeck.modelInfo.features.nfcReader
 					? [
 							{
 								id: 'nfc',
@@ -110,7 +145,7 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 						]
 					: undefined,
 				canChangePage:
-					streamdeck.MODEL === DeviceModelId.PLUS_XL || streamdeck.MODEL === DeviceModelId.PLUS
+					streamdeck.modelInfo.id === DeviceModelId.PLUS_XL || streamdeck.modelInfo.id === DeviceModelId.PLUS
 						? { label: 'Horizontal Swipe Changes Page' }
 						: undefined,
 				location: pluginInfo.type === 'remote' ? pluginInfo.streamdeck.remoteAddress : null,

@@ -5,7 +5,7 @@ import {
 	type Dimension,
 	type StreamDeckControlDefinition,
 	type StreamDeckLcdSegmentControlDefinition,
-	type StreamDeck,
+	type StreamDeckModelInfo,
 } from '@elgato-stream-deck/node'
 
 /**
@@ -13,7 +13,10 @@ import {
  */
 export const MIN_LED_RING_STEPS = 6
 
-export function createSurfaceSchema(capabilities: HostCapabilities, deck: StreamDeck): SurfaceSchemaLayoutDefinition {
+export function createSurfaceSchema(
+	capabilities: HostCapabilities,
+	modelInfo: StreamDeckModelInfo,
+): SurfaceSchemaLayoutDefinition {
 	const surfaceLayout: SurfaceSchemaLayoutDefinition = {
 		stylePresets: {
 			default: {
@@ -25,7 +28,7 @@ export function createSurfaceSchema(capabilities: HostCapabilities, deck: Stream
 		controls: {},
 	}
 
-	for (const control of deck.CONTROLS) {
+	for (const control of modelInfo.controls) {
 		const controlId = getControlId(control)
 		switch (control.type) {
 			case 'button':
@@ -100,7 +103,7 @@ export function createSurfaceSchema(capabilities: HostCapabilities, deck: Stream
 
 				break
 			case 'lcd-segment': {
-				const { columns, pixelSize } = getLcdCellSize(capabilities, deck.MODEL, deck.CONTROLS, control)
+				const { columns, pixelSize } = getLcdCellSize(capabilities, modelInfo.id, modelInfo.controls, control)
 
 				if (columns.length === 0) break
 
