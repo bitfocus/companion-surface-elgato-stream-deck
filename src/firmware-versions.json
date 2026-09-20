@@ -4,5 +4,5 @@
 		"productIds": [170],
 		"versions": { "AP2": "2.01.002", "ENCODER_AP2": "1.01.012", "ENCODER_LD": "1.01.006" }
 	},
-	{ "name": "Stream Deck Network Dock", "productIds": [65535], "versions": { "AP2": "1.01.016" } }
+	{ "name": "Stream Deck Network Dock", "productIds": [65535], "versions": { "AP2": "1.01.017" } }
 ]
