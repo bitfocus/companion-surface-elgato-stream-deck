@@ -26,7 +26,7 @@ const LATEST_FIRMWARE_VERSIONS: FirmwareVersionInfo[] = [
 		// Network dock
 		productIds: [0xffff],
 		versions: {
-			AP2: '1.01.016',
+			AP2: '1.01.017',
 		},
 	},
 ]
