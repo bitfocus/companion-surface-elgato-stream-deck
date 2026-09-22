@@ -18,6 +18,7 @@ import { DEVICE_MODEL_INFO } from '@elgato-stream-deck/core'
 import { generatePincodeMap } from './pincode.js'
 import { StreamDeckWrapper } from './instance.js'
 import { createSurfaceSchema } from './surface-schema.js'
+import { createSurfaceAppearance } from './surface-appearance.js'
 import { StreamDeckPluginRemoteService } from './remote.js'
 import { StreamDeckJpegOptions } from './util.js'
 import type { StreamDeckTcp } from '@elgato-stream-deck/tcp'
@@ -77,6 +78,7 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 				name: name,
 				// Add any other properties as needed
 				layout: createSurfaceSchema(ctx.capabilities, model),
+				appearance: createSurfaceAppearance(ctx.capabilities, model),
 			})
 		}
 
@@ -132,7 +134,7 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 			registerProps: {
 				brightness: streamdeck.modelInfo.id !== DeviceModelId.PEDAL,
 				surfaceLayout: createSurfaceSchema(context.capabilities, streamdeck.modelInfo),
-				surfaceAppearance: null,
+				surfaceAppearance: createSurfaceAppearance(context.capabilities, streamdeck.modelInfo),
 				pincodeMap: generatePincodeMap(streamdeck.modelInfo.id),
 				configFields: null,
 				transferVariables: streamdeck.modelInfo.features.nfcReader
