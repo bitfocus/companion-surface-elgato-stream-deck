@@ -36,6 +36,7 @@ export function generatePincodeMap(model: DeviceModelId): SurfacePincodeMap | nu
 		case DeviceModelId.ORIGINALMK2:
 		case DeviceModelId.ORIGINALMK2SCISSOR:
 		case DeviceModelId.MODULE15:
+		case DeviceModelId.MODULE15SCISSOR:
 			return {
 				type: 'single-page',
 				pincode: getControlIdFromXy(0, 1),
