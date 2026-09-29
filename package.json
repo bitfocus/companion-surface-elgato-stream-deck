@@ -25,8 +25,8 @@
 	},
 	"dependencies": {
 		"@companion-surface/base": "~1.2.1",
-		"@elgato-stream-deck/node": "^7.7.0",
-		"@elgato-stream-deck/tcp": "^7.7.0",
+		"@elgato-stream-deck/node": "^7.7.1",
+		"@elgato-stream-deck/tcp": "^7.7.1",
 		"@julusian/jpeg-turbo": "^3.0.1",
 		"nanoid": "^5.1.16",
 		"semver": "^7.8.5"
