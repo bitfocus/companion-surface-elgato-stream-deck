@@ -39,6 +39,11 @@ export class StreamDeckWrapper implements SurfaceInstance {
 	 */
 	#shouldCleanupOnQuit = true
 
+	/**
+	 * Whether the TCP connection has been lost
+	 */
+	#tcpDisconnected = false
+
 	public get surfaceId(): string {
 		return this.#surfaceId
 	}
@@ -129,6 +134,8 @@ export class StreamDeckWrapper implements SurfaceInstance {
 			// this.info.location = tcpStreamdeck.remoteAddress
 
 			tcpStreamdeck.tcpEvents.on('disconnected', () => {
+				this.#tcpDisconnected = true
+
 				this.#logger.warn(
 					`Lost connection to TCP Streamdeck ${tcpStreamdeck.remoteAddress}:${tcpStreamdeck.remotePort} (${this.#deck.PRODUCT_NAME})`,
 				)
@@ -141,6 +148,9 @@ export class StreamDeckWrapper implements SurfaceInstance {
 	async init(): Promise<void> {
 		// Start with blanking it
 		await this.blank()
+
+		// A disconnect during init is ignored by the host, as the surface is not yet registered. Fail the open instead
+		if (this.#tcpDisconnected) throw new Error('StreamDeck disconnected while initialising')
 	}
 	async close(): Promise<void> {
 		if (!this.#shouldCleanupOnQuit) return

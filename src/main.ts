@@ -29,6 +29,8 @@ export interface LocalStreamDeckDeviceInfo extends StreamDeckDeviceInfo {
 export interface RemoteStreamDeckDeviceInfo {
 	type: 'remote'
 	streamdeck: StreamDeckTcp
+	/** Whether the connection has dropped since the serial number was read. The `disconnected` event may have fired before the surface was opened */
+	isDisconnected: () => boolean
 }
 
 const remoteService = new StreamDeckPluginRemoteService()
@@ -84,6 +86,11 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 			logger.info(`StreamDeck firmware version: ${firmware}`)
 		} catch (e) {
 			logger.warn(`Failed to get StreamDeck firmware version: ${e}`)
+		}
+
+		// The connection may have dropped while opening, in which case the disconnected event has already been missed
+		if (pluginInfo.type === 'remote' && pluginInfo.isDisconnected()) {
+			throw new Error(`StreamDeck disconnected while opening: ${surfaceId}`)
 		}
 
 		return {

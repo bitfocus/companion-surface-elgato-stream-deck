@@ -69,6 +69,7 @@ export class StreamDeckPluginRemoteService
 							pluginInfo: {
 								type: 'remote',
 								streamdeck,
+								isDisconnected: () => disconnected,
 							},
 						},
 					])
