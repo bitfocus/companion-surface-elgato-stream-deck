@@ -6,7 +6,7 @@ import type {
 
 export const StreamDeckJpegOptions: JPEGEncodeOptions = {
 	quality: 95,
-	subsampling: 1, // 422
+	subsampling: 0, // 444
 }
 
 export function getControlId(control: StreamDeckControlDefinition, xOffset = 0): string {

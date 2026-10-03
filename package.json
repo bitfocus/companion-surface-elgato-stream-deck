@@ -4,14 +4,16 @@
 	"main": "dist/main.js",
 	"type": "module",
 	"scripts": {
-		"postinstall": "husky",
+		"postinstall": "husky && run build:artwork",
 		"format": "prettier -w .",
 		"package": "run build && companion-surface-build",
-		"build": "rimraf dist && run build:main && run build:manifest-usb-ids",
+		"build": "rimraf dist && run build:artwork && run build:main && run build:manifest-usb-ids",
+		"build:artwork": "node ./tools/build-artwork.mjs",
 		"build:main": "tsc -p tsconfig.build.json",
 		"build:manifest-usb-ids": "node ./tools/update-usb-ids.mjs",
 		"update:firmware-versions": "node ./tools/update-firmware-versions.mjs",
-		"dev": "tsc -p tsconfig.build.json --watch",
+		"dev": "run build:artwork && tsc -p tsconfig.build.json --watch",
+		"preview:artwork": "node ./tools/preview-artwork.mjs",
 		"lint:raw": "eslint",
 		"lint": "run lint:raw ."
 	},
@@ -25,10 +27,10 @@
 		"yarn": "^4"
 	},
 	"dependencies": {
-		"@companion-surface/base": "~1.4.0",
-		"@elgato-stream-deck/node": "^7.7.1",
-		"@elgato-stream-deck/tcp": "^7.7.1",
-		"@julusian/jpeg-turbo": "^3.0.1",
+		"@companion-surface/base": "1.5.0-nightly-claude-keen-tesla-ekqmu3-20261003-161950-932edce",
+		"@elgato-stream-deck/node": "^7.8.0",
+		"@elgato-stream-deck/tcp": "^7.8.0",
+		"@julusian/jpeg-turbo": "^3.1.0",
 		"nanoid": "^6.0.1",
 		"semver": "^7.8.5"
 	},
