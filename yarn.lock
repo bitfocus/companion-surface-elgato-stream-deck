@@ -67,12 +67,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@companion-surface/base@npm:1.5.0-nightly-claude-keen-tesla-ekqmu3-20260916-142851-baa91b4":
-  version: 1.5.0-nightly-claude-keen-tesla-ekqmu3-20260916-142851-baa91b4
-  resolution: "@companion-surface/base@npm:1.5.0-nightly-claude-keen-tesla-ekqmu3-20260916-142851-baa91b4"
+"@companion-surface/base@npm:1.5.0-nightly-claude-keen-tesla-ekqmu3-20261003-161950-932edce":
+  version: 1.5.0-nightly-claude-keen-tesla-ekqmu3-20261003-161950-932edce
+  resolution: "@companion-surface/base@npm:1.5.0-nightly-claude-keen-tesla-ekqmu3-20261003-161950-932edce"
   dependencies:
     zod: "npm:^4.4.3"
-  checksum: 10c0/9715355f83026a3072b002b42f2f8a4de5aa2d1c991c19e83b6e8625131ee9371e1686238620e72ff32397c94c89d37449910863e58b2b9e0ccb74d6428fea9e
+  checksum: 10c0/70c2d78b1568e9daba6b602bdbc35ea24142473eccc9109d3d93505c89784a306521d6c9783a8b282a2df05b23acfbfaf233d5ed660f244c7c0297cd75c087d4
   languageName: node
   linkType: hard
 
@@ -100,10 +100,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@elgato-stream-deck/node@portal:/home/julus/Projects/libs/node-elgato-stream-deck/packages/node::locator=companion-surface-elgato-stream-deck%40workspace%3A."
   dependencies:
-    "@elgato-stream-deck/core": "npm:7.7.0"
-    "@elgato-stream-deck/node-lib": "npm:7.7.0"
+    "@elgato-stream-deck/core": "npm:7.6.3"
+    "@elgato-stream-deck/node-lib": "npm:7.6.3"
     eventemitter3: "npm:^5.0.4"
-    node-hid: "npm:^3.2.0"
+    node-hid: "npm:^3.4.0"
     p-queue: "npm:^6.6.2"
     tslib: "npm:^2.8.1"
   languageName: node
@@ -113,9 +113,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@elgato-stream-deck/tcp@portal:/home/julus/Projects/libs/node-elgato-stream-deck/packages/tcp::locator=companion-surface-elgato-stream-deck%40workspace%3A."
   dependencies:
-    "@elgato-stream-deck/core": "npm:7.7.0"
-    "@elgato-stream-deck/node-lib": "npm:7.7.0"
-    "@julusian/bonjour-service": "npm:^1.4.2"
+    "@elgato-stream-deck/core": "npm:7.6.3"
+    "@elgato-stream-deck/node-lib": "npm:7.6.3"
+    "@julusian/bonjour-service": "npm:^1.4.5"
     tslib: "npm:^2.8.1"
   languageName: node
   linkType: soft
@@ -437,14 +437,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@julusian/bonjour-service@npm:^1.4.2":
-  version: 1.4.2
-  resolution: "@julusian/bonjour-service@npm:1.4.2"
+"@julusian/bonjour-service@npm:^1.4.5":
+  version: 1.4.5
+  resolution: "@julusian/bonjour-service@npm:1.4.5"
   dependencies:
-    dns-packet: "npm:^5.2.2"
+    dns-packet: "npm:^5.6.1"
     fast-deep-equal: "npm:^3.1.3"
     thunky: "npm:^1.0.2"
-  checksum: 10c0/3154d2f55da7ea855e2bb666f30de6d3f6dc2b1cbbfca589674bcf8068e90a5477fa0767651dda46efe9b39cd1280df12f322ed714e96832e56c2ef3e2502a03
+  checksum: 10c0/bcd95af1e518d4464b95dc711346c5542a2ddd9bb3788615bc03b2a2adf49647dbc35bc0a086147283afa0dcc93b464dd40b22ad606b12142f84b9da8c53287f
   languageName: node
   linkType: hard
 
@@ -852,7 +852,7 @@ __metadata:
   resolution: "companion-surface-elgato-stream-deck@workspace:."
   dependencies:
     "@companion-module/tools": "npm:^3.1.0"
-    "@companion-surface/base": "npm:1.5.0-nightly-claude-keen-tesla-ekqmu3-20260916-142851-baa91b4"
+    "@companion-surface/base": "npm:1.5.0-nightly-claude-keen-tesla-ekqmu3-20261003-161950-932edce"
     "@elgato-stream-deck/node": "npm:^7.7.1"
     "@elgato-stream-deck/tcp": "npm:^7.7.1"
     "@julusian/jpeg-turbo": "npm:^3.0.1"
@@ -907,7 +907,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dns-packet@npm:^5.2.2":
+"dns-packet@npm:^5.6.1":
   version: 5.6.1
   resolution: "dns-packet@npm:5.6.1"
   dependencies:
@@ -1798,21 +1798,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-addon-api@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "node-addon-api@npm:3.2.1"
-  dependencies:
-    node-gyp: "npm:latest"
-  checksum: 10c0/41f21c9d12318875a2c429befd06070ce367065a3ef02952cfd4ea17ef69fa14012732f510b82b226e99c254da8d671847ea018cad785f839a5366e02dd56302
-  languageName: node
-  linkType: hard
-
 "node-addon-api@npm:^8.5.0":
   version: 8.5.0
   resolution: "node-addon-api@npm:8.5.0"
   dependencies:
     node-gyp: "npm:latest"
   checksum: 10c0/e4de0b4e70998fed7ef41933946f60565fc3a17cb83b7d626a0c0bb1f734cf7852e0e596f12681e7c8ed424163ee3cdbb4f0abaa9cc269d03f48834c263ba162
+  languageName: node
+  linkType: hard
+
+"node-addon-api@npm:^8.9.0":
+  version: 8.9.2
+  resolution: "node-addon-api@npm:8.9.2"
+  dependencies:
+    node-gyp: "npm:latest"
+  checksum: 10c0/5cf5231e0da22b22862e6b593982a0e390ca89d022a9ac666c83deceecf20378cb8afe47c456ac1a58a9f62ef60099c950aec05814a287fdfd751d9d154fb12d
   languageName: node
   linkType: hard
 
@@ -1843,16 +1843,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-hid@npm:^3.2.0":
-  version: 3.3.0
-  resolution: "node-hid@npm:3.3.0"
+"node-hid@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "node-hid@npm:3.4.0"
   dependencies:
-    node-addon-api: "npm:^3.2.1"
+    node-addon-api: "npm:^8.9.0"
     node-gyp: "npm:latest"
-    pkg-prebuilds: "npm:^1.0.0"
+    pkg-prebuilds: "npm:^1.1.0"
   bin:
     hid-showdevices: src/show-devices.js
-  checksum: 10c0/3b0af78ca6e533bed7bda5834bc9c4babb4006cfee891383361b0593ebcec9b33c57e856e2928b0ad6592219de5d34026682164210866e536d1cb23e8457864c
+  checksum: 10c0/701321d6a76b3ec8a92f6ffdf04dfab3eaf11616047c825c3c2592cd362f9d677a262d1eaf7c24ab26d8f437485278f61a93be97aa7e0137fe1e24ef08a48e30
   languageName: node
   linkType: hard
 
@@ -1997,6 +1997,16 @@ __metadata:
     pkg-prebuilds-copy: bin/copy.mjs
     pkg-prebuilds-verify: bin/verify.mjs
   checksum: 10c0/a955b097d3693216c06015fe03ae5866da5f1d2ec6a75971194e3cf5c342e1fdde27786bf0cce85814183cd98aecaf732ae1373fc2389a576daca2f3375661ae
+  languageName: node
+  linkType: hard
+
+"pkg-prebuilds@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "pkg-prebuilds@npm:1.1.0"
+  bin:
+    pkg-prebuilds-copy: bin/copy.mjs
+    pkg-prebuilds-verify: bin/verify.mjs
+  checksum: 10c0/14894c0b3cffd81d53ebc47565854360b63eec72c862afa750c3f496a27f3ff9f1e992d9e728a948ad8e2ddecb91c80543a135908c59e28ef7eebf47c89de3e0
   languageName: node
   linkType: hard
 

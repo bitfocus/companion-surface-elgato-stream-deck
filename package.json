@@ -27,7 +27,7 @@
 		"yarn": "^4"
 	},
 	"dependencies": {
-		"@companion-surface/base": "1.5.0-nightly-claude-keen-tesla-ekqmu3-20260916-142851-baa91b4",
+		"@companion-surface/base": "1.5.0-nightly-claude-keen-tesla-ekqmu3-20261003-161950-932edce",
 		"@elgato-stream-deck/node": "^7.7.1",
 		"@elgato-stream-deck/tcp": "^7.7.1",
 		"@julusian/jpeg-turbo": "^3.0.1",
