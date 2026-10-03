@@ -147,6 +147,8 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 				brightness: streamdeck.modelInfo.id !== DeviceModelId.PEDAL,
 				surfaceLayout: createSurfaceSchema(context.capabilities, streamdeck.modelInfo),
 				surfaceAppearance: createSurfaceAppearance(context.capabilities, streamdeck.modelInfo),
+				// @ts-expect-error The pinned surface base nightly predates `modelId`; drop once a newer one is pinned
+				modelId: declaredModelFor(streamdeck.modelInfo.id),
 				pincodeMap: generatePincodeMap(streamdeck.modelInfo.id),
 				configFields: null,
 				transferVariables: streamdeck.modelInfo.features.nfcReader
