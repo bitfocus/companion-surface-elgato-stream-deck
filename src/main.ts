@@ -39,6 +39,29 @@ const remoteService = new StreamDeckPluginRemoteService()
 
 const logger = createModuleLogger('Plugin')
 
+/**
+ * Which declared model a model is: itself, or the one it is identical to and so is declared in place of it. Null for
+ * a model with no controls to lay out, which is not declared at all.
+ */
+function declaredModelFor(id: DeviceModelId): DeviceModelId | null {
+	switch (id) {
+		case DeviceModelId.ORIGINALV2:
+		case DeviceModelId.ORIGINALMK2:
+		case DeviceModelId.ORIGINALMK2SCISSOR:
+		case DeviceModelId.MODULE15:
+		case DeviceModelId.MODULE15SCISSOR:
+			return DeviceModelId.ORIGINAL
+		case DeviceModelId.MODULE6:
+			return DeviceModelId.MINI
+		case DeviceModelId.MODULE32:
+			return DeviceModelId.XL
+		case DeviceModelId.NETWORK_DOCK:
+			return null
+		default:
+			return id
+	}
+}
+
 const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 	remote: remoteService,
 
@@ -55,28 +78,16 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 		for (const model of Object.values(DEVICE_MODEL_INFO)) {
 			if (!model) continue
 
-			let name = model.name
+			// Skip the models that are identical to another, so are just noise
+			if (declaredModelFor(model.id) !== model.id) continue
 
-			switch (model.id) {
-				// Skip a few models that are identical to others, so are just noise
-				case DeviceModelId.ORIGINALV2:
-				case DeviceModelId.ORIGINALMK2:
-				case DeviceModelId.ORIGINALMK2SCISSOR:
-				case DeviceModelId.MODULE6:
-				case DeviceModelId.MODULE15:
-				case DeviceModelId.MODULE15SCISSOR:
-				case DeviceModelId.MODULE32:
-				case DeviceModelId.NETWORK_DOCK:
-					continue
-				// Mangle names of some models for clarity
-				case DeviceModelId.ORIGINAL:
-					name = 'Stream Deck (15 key)'
-					break
-			}
+			// Mangle names of some models for clarity
+			const name = model.id === DeviceModelId.ORIGINAL ? 'Stream Deck (15 key)' : model.name
 
 			models.push({
 				id: model.id,
-				name: name,
+				// With the manufacturer, as a connected surface describes itself
+				name: `${model.manufacturer} ${name}`,
 				// Add any other properties as needed
 				layout: createSurfaceSchema(ctx.capabilities, model),
 				appearance: createSurfaceAppearance(ctx.capabilities, model),
