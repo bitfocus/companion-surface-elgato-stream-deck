@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 687 496">
+	<!-- Traced from the Elgato streamdeck-kit-ipad simulator bezel, registered to the panel by its key holes -->
+	<rect id="face" x="104" y="86" width="480" height="320" fill="none"/>
+
+	<path d="M187.6 0H499.4C651.4 0 687 35.6 687 187.6V308.4C687 460.4 651.4 496 499.4 496H187.6C35.6 496 0 460.4 0 308.4V187.6C0 35.6 35.6 0 187.6 0Z" fill="#e3e3e3"/>
+
+	<!-- Logo -->
+	<circle cx="343.5" cy="49" r="16" fill="none" stroke="#c3c3c3" stroke-width="5.2"/><path d="M339 41.6L350.9 49L339 56.4Z" fill="#c3c3c3"/>
+
+	<!-- Light sensors, below the page touch points -->
+	<circle cx="159.3" cy="413.1" r="5" fill="#cdcdcd"/>
+	<circle cx="528.8" cy="413.1" r="5" fill="#cdcdcd"/>
+</svg>

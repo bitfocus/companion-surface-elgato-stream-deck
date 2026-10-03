@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 468 338">
+	<!-- Traced from the Elgato streamdeck-kit-ipad simulator bezel, registered to the panel by its key holes -->
+	<rect id="face" x="72" y="47" width="320" height="240" fill="none"/>
+
+	<rect width="468" height="338" rx="21" fill="#262626"/>
+
+	<!-- Wordmark -->
+	<circle cx="153.7" cy="34" r="14.4" fill="none" stroke="#d6d6d6" stroke-width="4.7"/><path d="M149.7 27.3L160.4 34L149.7 40.7Z" fill="#d6d6d6"/>
+	<text x="180.1" y="42.5" font-family="'DIN Condensed','Arial Narrow',Arial,sans-serif" font-weight="700" font-size="25.7" textLength="149.7" lengthAdjust="spacingAndGlyphs" fill="#d6d6d6">STREAM DECK</text>
+</svg>

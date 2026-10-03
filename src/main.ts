@@ -64,6 +64,7 @@ const StreamDeckPlugin: SurfacePlugin<SomeStreamDeckDeviceInfo> = {
 				case DeviceModelId.ORIGINALMK2SCISSOR:
 				case DeviceModelId.MODULE6:
 				case DeviceModelId.MODULE15:
+				case DeviceModelId.MODULE15SCISSOR:
 				case DeviceModelId.MODULE32:
 				case DeviceModelId.NETWORK_DOCK:
 					continue

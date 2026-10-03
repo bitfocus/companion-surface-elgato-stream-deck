@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 1007">
+	<!-- Traced from the Elgato streamdeck-kit-ipad simulator bezel, registered to the panel by its key holes -->
+	<rect id="face" x="119" y="91" width="800" height="762" fill="none"/>
+
+	<rect width="1040" height="1007" rx="66" fill="#262626"/>
+
+	<!-- Wordmark -->
+	<circle cx="431.1" cy="46.7" r="15.1" fill="none" stroke="#d6d6d6" stroke-width="4.9"/><path d="M426.8 39.7L438.1 46.7L426.8 53.7Z" fill="#d6d6d6"/>
+	<text x="457.3" y="57.6" font-family="'DIN Condensed','Arial Narrow',Arial,sans-serif" font-weight="700" font-size="30.1" textLength="169.7" lengthAdjust="spacingAndGlyphs" fill="#d6d6d6">STREAM DECK</text>
+
+	<!-- Touch strip, in its frame -->
+	<rect x="70" y="432" width="894" height="182" rx="4" fill="#0b0b0b"/>
+	<rect x="119" y="471" width="800" height="100" fill="#000"/>
+
+	<!-- Recess the encoders sit in -->
+	<rect x="74" y="663" width="890" height="260" rx="52" fill="#1b1b1b" stroke="#303030" stroke-width="3"/>
+</svg>

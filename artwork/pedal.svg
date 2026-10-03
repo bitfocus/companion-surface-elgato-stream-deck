@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 355">
+	<!-- Traced from the Elgato streamdeck-kit-ipad simulator bezel, registered to the panel by its key holes -->
+	<rect id="face" x="0" y="0" width="500" height="355" fill="none"/>
+
+	<!-- Drawn in the pixels of the reference image, which is 1303 wide -->
+	<g transform="scale(0.38373)">
+		<path d="M200 0H1103C1231 0 1303 72 1303 200V870Q1303 921 1252 921H1040V896H262V921H51Q0 921 0 870V200C0 72 72 0 200 0Z" fill="#262626"/>
+
+		<!-- The three pedals, and the gaps between them -->
+		<path d="M30 870V230Q30 120 140 120H300L268 870Z" fill="#202020"/>
+		<path d="M1273 870V230Q1273 120 1163 120H1003L1035 870Z" fill="#202020"/>
+		<path d="M326 8H977L1030 890H273Z" fill="#202020"/>
+		<path d="M322 8L270 895M981 8L1033 895" stroke="#111" stroke-width="12"/>
+		<rect x="545" y="3" width="215" height="24" rx="6" fill="#151515"/>
+
+		<!-- Rubber treads -->
+		<path d="M50 850V230Q50 140 140 140H265L220 850Z" fill="#181818"/>
+		<path d="M1253 850V230Q1253 140 1163 140H1038L1083 850Z" fill="#181818"/>
+		<path d="M330 88H975L1015 850H288Z" fill="#181818"/>
+
+		<!-- Logo, moulded into the middle pedal -->
+		<path d="M790 438A152 152 0 1 0 803 520" fill="none" stroke="#0e0e0e" stroke-width="35"/>
+		<path d="M600 432L805 525L612 572Z" fill="none" stroke="#0e0e0e" stroke-width="30" stroke-linejoin="round"/>
+	</g>
+</svg>
