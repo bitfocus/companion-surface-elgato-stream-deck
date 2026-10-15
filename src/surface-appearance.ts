@@ -126,9 +126,9 @@ export function createSurfaceAppearance(
 			case 'button':
 				controls[getControlId(control)] = {
 					...translateBounds(control.bounds, offsetX, offsetY),
-					type: 'button',
+					kind: 'button',
 					shape: {
-						type: 'rect',
+						shape: 'rect',
 						cornerRadius: Math.min(control.bounds.width, control.bounds.height) * KEY_CORNER_RADIUS_RATIO,
 					},
 				}
@@ -136,8 +136,8 @@ export function createSurfaceAppearance(
 			case 'encoder':
 				controls[getControlId(control)] = {
 					...translateBounds(control.bounds, offsetX, offsetY),
-					type: 'encoder',
-					shape: { type: 'circle' },
+					kind: 'encoder',
+					shape: { shape: 'ellipse' },
 				}
 				break
 			case 'lcd-segment': {
@@ -160,8 +160,8 @@ export function createSurfaceAppearance(
 							offsetX,
 							offsetY,
 						),
-						type: 'lcd-segment',
-						shape: { type: 'rect' },
+						kind: 'lcd-segment',
+						shape: { shape: 'rect' },
 					}
 				}
 				break

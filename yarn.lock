@@ -67,12 +67,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@companion-surface/base@npm:1.5.0-nightly-claude-keen-tesla-ekqmu3-20261003-161950-932edce":
-  version: 1.5.0-nightly-claude-keen-tesla-ekqmu3-20261003-161950-932edce
-  resolution: "@companion-surface/base@npm:1.5.0-nightly-claude-keen-tesla-ekqmu3-20261003-161950-932edce"
+"@companion-surface/base@npm:1.5.0-nightly-main-20261014-213444-0afe929":
+  version: 1.5.0-nightly-main-20261014-213444-0afe929
+  resolution: "@companion-surface/base@npm:1.5.0-nightly-main-20261014-213444-0afe929"
   dependencies:
     zod: "npm:^4.4.3"
-  checksum: 10c0/70c2d78b1568e9daba6b602bdbc35ea24142473eccc9109d3d93505c89784a306521d6c9783a8b282a2df05b23acfbfaf233d5ed660f244c7c0297cd75c087d4
+  checksum: 10c0/dee56b669e20b1bbc8d493eacf5a61feb1e6315a55409850d9fedb0adf6e7f2908d8bcbdc99ed309b7a66df6e84a6f5f8e7bbdcb95ba429c0726b56ab41b9f37
   languageName: node
   linkType: hard
 
@@ -793,7 +793,7 @@ __metadata:
   resolution: "companion-surface-elgato-stream-deck@workspace:."
   dependencies:
     "@companion-module/tools": "npm:^3.1.0"
-    "@companion-surface/base": "npm:1.5.0-nightly-claude-keen-tesla-ekqmu3-20261003-161950-932edce"
+    "@companion-surface/base": "npm:1.5.0-nightly-main-20261014-213444-0afe929"
     "@elgato-stream-deck/node": "npm:^7.8.0"
     "@elgato-stream-deck/tcp": "npm:^7.8.0"
     "@julusian/jpeg-turbo": "npm:^3.1.0"
