@@ -10,17 +10,12 @@ import {
 	createModuleLogger,
 	ModuleLogger,
 } from '@companion-surface/base'
-import {
-	DeviceModelId,
-	StreamDeck,
-	StreamDeckEncoderControlDefinition,
-	StreamDeckLcdSegmentControlDefinition,
-} from '@elgato-stream-deck/node'
+import { DeviceModelId, StreamDeck, StreamDeckLcdSegmentControlDefinition } from '@elgato-stream-deck/node'
 import { setTimeout } from 'node:timers/promises'
 import { getControlId, getControlIdFromXy, matchOffsetByControlId } from './util.js'
 import { checkForFirmwareUpdatesForSurface } from './firmware.js'
 import { StreamDeckTcp } from '@elgato-stream-deck/tcp'
-import { getLcdCellSize, MIN_LED_RING_STEPS } from './surface-schema.js'
+import { getLcdCellRegion, MIN_LED_RING_STEPS } from './surface-schema.js'
 
 /**
  * Perceptual gamma curve for the encoder LED rings.
@@ -269,36 +264,16 @@ export class StreamDeckWrapper implements SurfaceInstance {
 					return
 				}
 
-				const { columns, pixelSize } = getLcdCellSize(
+				const region = getLcdCellRegion(
 					this.#context.capabilities,
 					this.#deck.MODEL,
 					this.#deck.CONTROLS,
 					control,
+					drawColumn,
 				)
-
-				const columnIndex = columns.indexOf(drawColumn)
-				if (columnIndex === -1) {
+				if (!region) {
 					this.#logger.error(`Column ${drawColumn} not valid for controlId ${drawProps.controlId}`)
 					return
-				}
-
-				let drawX = columnIndex * pixelSize.width
-				if (!this.#context.capabilities.supportsNonSquareButtons) {
-					if (this.#deck.MODEL === DeviceModelId.PLUS) {
-						// Position aligned with the buttons/encoders
-						drawX = columnIndex * 216.666 + 25
-					} else if (this.#deck.MODEL === DeviceModelId.PLUS_XL) {
-						const matchingEncoder = this.#deck.CONTROLS.find(
-							(c): c is StreamDeckEncoderControlDefinition => c.type === 'encoder' && c.column === drawColumn,
-						)
-						if (!matchingEncoder) {
-							this.#logger.error(`Failed to find matching encoder for controlId ${drawProps.controlId}`)
-							return
-						}
-
-						// Position aligned with the buttons/encoders
-						drawX = matchingEncoder.index * 212 + 20
-					}
 				}
 
 				const maxAttempts = 3
@@ -306,10 +281,10 @@ export class StreamDeckWrapper implements SurfaceInstance {
 					try {
 						if (signal.aborted) return
 
-						await this.#deck.fillLcdRegion(control.id, drawX, 0, drawProps.image, {
+						await this.#deck.fillLcdRegion(control.id, region.x, region.y, drawProps.image, {
 							format: 'rgb',
-							width: pixelSize.width,
-							height: pixelSize.height,
+							width: region.width,
+							height: region.height,
 						})
 						return
 					} catch (e) {

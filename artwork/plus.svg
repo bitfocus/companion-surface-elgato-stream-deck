@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 1007">
+	<!-- Traced from the Elgato streamdeck-kit-ipad simulator bezel, registered to the panel by its key holes -->
+	<rect id="face" x="119" y="91" width="800" height="762" fill="none"/>
+
+	<rect width="1040" height="1007" rx="66" fill="#262626"/>
+
+	<!-- Wordmark -->
+	<path transform="translate(351.484 29.15) scale(0.338)" d="M233.6 0L238.2 0C251.1 0.7 263.6 6.1 272.7 15.3C278.7 21.2 282.9 28.6 285.7 36.5C282.6 38.3 279.5 40.1 276.4 42C273.6 31.5 266.9 22.1 257.5 16.5C248.2 10.8 236.5 8.9 225.8 11.7C214.1 14.5 203.8 22.8 198.6 33.7C193 44.8 192.9 58.5 198.2 69.7C202.9 79.9 211.9 87.9 222.5 91.5C233.6 95.3 246.2 94.2 256.3 88.3C265.4 83.3 272.2 74.7 275.6 65C258.8 55.4 241.9 45.7 225.1 36.1C225.1 46.5 225.1 56.9 225.1 67.3C230.8 64 236.6 60.7 242.3 57.3C245.3 59 248.4 60.7 251.4 62.4C242.7 67.5 234 72.5 225.2 77.5C222.2 75.7 219.1 74 216 72.2C216.2 58.5 216.1 44.9 216.1 31.2C219.1 29.4 222.2 27.7 225.2 25.9C245.9 37.7 266.5 49.5 287.1 61.3C284.7 74.4 277.1 86.5 266.3 94.3C258.4 100 249 103.3 239.3 104L232.8 104C223.6 103.5 214.5 100.4 206.8 95.2C194.5 86.9 185.9 73 184.3 58.1C182.3 43 187.6 27.2 198.2 16.2C207.3 6.5 220.3 0.7 233.6 0Z" fill="#d6d6d6"/>
+	<text x="457.3" y="57.6" font-family="'DIN Condensed','Arial Narrow',Arial,sans-serif" font-weight="700" font-size="30.1" textLength="169.7" lengthAdjust="spacingAndGlyphs" fill="#d6d6d6">STREAM DECK</text>
+
+	<!-- Touch strip, in its frame -->
+	<rect x="70" y="432" width="894" height="182" rx="4" fill="#0b0b0b"/>
+	<rect x="119" y="471" width="800" height="100" fill="#000"/>
+
+	<!-- Recess the encoders sit in -->
+	<rect x="74" y="663" width="890" height="260" rx="52" fill="#1b1b1b" stroke="#303030" stroke-width="3"/>
+</svg>

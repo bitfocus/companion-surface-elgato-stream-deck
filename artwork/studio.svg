@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3040 280">
+	<!-- No straight-on drawing exists, so this is drawn around the library's layout from Elgato's product photos -->
+	<rect id="face" x="0" y="0" width="3040" height="280" fill="none"/>
+
+	<rect width="3040" height="280" rx="8" fill="#222"/>
+
+	<!-- End panels, each holding a dial -->
+	<rect x="8" y="8" width="228" height="264" rx="10" fill="#2b2b2b"/>
+	<rect x="2804" y="8" width="228" height="264" rx="10" fill="#2b2b2b"/>
+	<circle cx="88" cy="140" r="70" fill="#1a1a1a"/>
+	<circle cx="2952" cy="140" r="70" fill="#1a1a1a"/>
+
+	<!-- NFC reader mark, between the left dial and the keys -->
+	<path d="M184 128a14 14 0 0 1 0 24M192 120a24 24 0 0 1 0 40M200 112a34 34 0 0 1 0 56" fill="none" stroke="#8a8a8a" stroke-width="4" stroke-linecap="round"/>
+
+	<!-- USB-C port, between the keys and the right dial -->
+	<rect x="2838" y="112" width="12" height="56" rx="6" fill="#0d0d0d" stroke="#555" stroke-width="2"/>
+
+	<!-- Glass over the keys -->
+	<rect x="236" y="8" width="2568" height="264" rx="6" fill="#0f0f0f"/>
+</svg>

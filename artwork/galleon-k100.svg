@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1579">
+	<!-- No drawing or reference image exists, so this is drawn around the library's layout: the Stream Deck section of the keyboard, where the numpad would be -->
+	<rect id="face" x="40" y="40" width="720" height="1499" fill="none"/>
+
+	<rect width="800" height="1579" rx="24" fill="#1f1f1f"/>
+
+	<!-- Recesses the dials sit in -->
+	<circle cx="176" cy="120" r="96" fill="#161616"/>
+	<circle cx="624" cy="120" r="96" fill="#161616"/>
+
+	<!-- The panel under the screen and keys -->
+	<rect x="34" y="253" width="732" height="1292" rx="10" fill="#0c0c0c"/>
+</svg>

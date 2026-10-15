@@ -4,8 +4,9 @@ import {
 	DeviceModelId,
 	type Dimension,
 	type StreamDeckControlDefinition,
+	type StreamDeckEncoderControlDefinition,
 	type StreamDeckLcdSegmentControlDefinition,
-	type StreamDeck,
+	type StreamDeckModelInfo,
 } from '@elgato-stream-deck/node'
 
 /**
@@ -13,7 +14,10 @@ import {
  */
 export const MIN_LED_RING_STEPS = 6
 
-export function createSurfaceSchema(capabilities: HostCapabilities, deck: StreamDeck): SurfaceSchemaLayoutDefinition {
+export function createSurfaceSchema(
+	capabilities: HostCapabilities,
+	modelInfo: StreamDeckModelInfo,
+): SurfaceSchemaLayoutDefinition {
 	const surfaceLayout: SurfaceSchemaLayoutDefinition = {
 		stylePresets: {
 			default: {
@@ -25,7 +29,7 @@ export function createSurfaceSchema(capabilities: HostCapabilities, deck: Stream
 		controls: {},
 	}
 
-	for (const control of deck.CONTROLS) {
+	for (const control of modelInfo.controls) {
 		const controlId = getControlId(control)
 		switch (control.type) {
 			case 'button':
@@ -100,7 +104,7 @@ export function createSurfaceSchema(capabilities: HostCapabilities, deck: Stream
 
 				break
 			case 'lcd-segment': {
-				const { columns, pixelSize } = getLcdCellSize(capabilities, deck.MODEL, deck.CONTROLS, control)
+				const { columns, pixelSize } = getLcdCellSize(capabilities, modelInfo.id, modelInfo.controls, control)
 
 				if (columns.length === 0) break
 
@@ -175,4 +179,46 @@ export function getLcdCellSize(
 			height: control.pixelSize.height,
 		},
 	}
+}
+
+/**
+ * Where a cell of an lcd segment lives inside that segment, in segment pixels.
+ *
+ * A segment's pixels map 1:1 onto its `bounds`, so this doubles as where the cell sits on the
+ * face. Returns null if the column is not one of the cells the segment is split into.
+ */
+export function getLcdCellRegion(
+	capabilities: HostCapabilities,
+	model: DeviceModelId,
+	allControls: Readonly<StreamDeckControlDefinition[]>,
+	control: StreamDeckLcdSegmentControlDefinition,
+	drawColumn: number,
+): { x: number; y: number; width: number; height: number } | null {
+	const { columns, pixelSize } = getLcdCellSize(capabilities, model, allControls, control)
+
+	const columnIndex = columns.indexOf(drawColumn)
+	if (columnIndex === -1) return null
+
+	if (!control.drawRegions) {
+		// The whole segment is drawn as one
+		return { x: 0, y: 0, width: pixelSize.width, height: pixelSize.height }
+	}
+
+	let x = columnIndex * pixelSize.width
+	if (!capabilities.supportsNonSquareButtons) {
+		if (model === DeviceModelId.PLUS) {
+			// Position aligned with the buttons/encoders
+			x = columnIndex * 216.666 + 25
+		} else if (model === DeviceModelId.PLUS_XL) {
+			const matchingEncoder = allControls.find(
+				(c): c is StreamDeckEncoderControlDefinition => c.type === 'encoder' && c.column === drawColumn,
+			)
+			if (!matchingEncoder) return null
+
+			// Position aligned with the buttons/encoders
+			x = matchingEncoder.index * 212 + 20
+		}
+	}
+
+	return { x, y: 0, width: pixelSize.width, height: pixelSize.height }
 }
