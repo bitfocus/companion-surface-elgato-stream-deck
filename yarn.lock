@@ -76,51 +76,51 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@elgato-stream-deck/core@npm:7.7.1":
-  version: 7.7.1
-  resolution: "@elgato-stream-deck/core@npm:7.7.1"
+"@elgato-stream-deck/core@npm:7.9.0":
+  version: 7.9.0
+  resolution: "@elgato-stream-deck/core@npm:7.9.0"
   dependencies:
     eventemitter3: "npm:^5.0.4"
     tslib: "npm:^2.8.1"
-  checksum: 10c0/996bf06bdaa941908735845538376d034f3a8eacd84ac42ac0d0a5e38781d9b41912e575910bc6dfc85901f9d45770ba2f25bc026a8bbe5cb9e670a4eaf2efc6
+  checksum: 10c0/374ed676a1bd61a52c8dc2d1132519c5a21d7f68a54c5786e21bfff7f0e42f7199420584fefbf131929d4948f311ec63a736a383916086cafd91892758c6c3b6
   languageName: node
   linkType: hard
 
-"@elgato-stream-deck/node-lib@npm:7.7.1":
-  version: 7.7.1
-  resolution: "@elgato-stream-deck/node-lib@npm:7.7.1"
+"@elgato-stream-deck/node-lib@npm:7.9.0":
+  version: 7.9.0
+  resolution: "@elgato-stream-deck/node-lib@npm:7.9.0"
   dependencies:
     jpeg-js: "npm:^0.4.4"
     tslib: "npm:^2.8.1"
   peerDependencies:
     "@julusian/jpeg-turbo": ^1.1.2 || ^2.0.0 || ^3.0.0
-  checksum: 10c0/f6b7652c948401f8e268e16b78efcb40c91635302ff07c1b4157cdb6895c3cb53908cae53e104d97776de0dd3fea24a97412f62bc5727c1b64f2480384d9c8a2
+  checksum: 10c0/3c42b7eab63f1904b178ed1dfec75ffb598f1eae2d100f7160fd3f165ea951936457fbf230a29dbfc1d55759a44122a4d2aac8f6c71179176dc28768920dd49f
   languageName: node
   linkType: hard
 
-"@elgato-stream-deck/node@npm:^7.7.1":
-  version: 7.7.1
-  resolution: "@elgato-stream-deck/node@npm:7.7.1"
+"@elgato-stream-deck/node@npm:^7.9.0":
+  version: 7.9.0
+  resolution: "@elgato-stream-deck/node@npm:7.9.0"
   dependencies:
-    "@elgato-stream-deck/core": "npm:7.7.1"
-    "@elgato-stream-deck/node-lib": "npm:7.7.1"
+    "@elgato-stream-deck/core": "npm:7.9.0"
+    "@elgato-stream-deck/node-lib": "npm:7.9.0"
     eventemitter3: "npm:^5.0.4"
-    node-hid: "npm:^3.2.0"
+    node-hid: "npm:^3.4.0"
     p-queue: "npm:^6.6.2"
     tslib: "npm:^2.8.1"
-  checksum: 10c0/daab1607548b2fdcb0d9e1911d683ed20528d6c339b465e6fae220f913dd2b3f665d2da3b4ae295a8ab701e1997dff347149e6ff2af5986ec0ad24189cda6198
+  checksum: 10c0/70132b72de5d367c7d33e3f2edaf6648ba2188a4da2349c15a813e2cabe1f27ba06b8c6a385dacd43f68261c010575984a7b47de26b4ce8b3088323be0fb8546
   languageName: node
   linkType: hard
 
-"@elgato-stream-deck/tcp@npm:^7.7.1":
-  version: 7.7.1
-  resolution: "@elgato-stream-deck/tcp@npm:7.7.1"
+"@elgato-stream-deck/tcp@npm:^7.9.0":
+  version: 7.9.0
+  resolution: "@elgato-stream-deck/tcp@npm:7.9.0"
   dependencies:
-    "@elgato-stream-deck/core": "npm:7.7.1"
-    "@elgato-stream-deck/node-lib": "npm:7.7.1"
-    "@julusian/bonjour-service": "npm:^1.4.2"
+    "@elgato-stream-deck/core": "npm:7.9.0"
+    "@elgato-stream-deck/node-lib": "npm:7.9.0"
+    "@julusian/bonjour-service": "npm:^1.4.5"
     tslib: "npm:^2.8.1"
-  checksum: 10c0/358b903d6a4fee5904198f3b16434497aaa87d092d16ad9308abb378c13be8b3266e775ad1d781b4bab1479e4096da12b3ac83f2d8a6686fd0b962868ecd88f6
+  checksum: 10c0/c9160b6eafcf201bcde166e80dac03f55828e50984d56fbe5f8cc9894ae34c16470eff8e6f68b41c14a49c853c8fabcf7e9945907043b42efd3e5646cada3bf3
   languageName: node
   linkType: hard
 
@@ -439,14 +439,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@julusian/bonjour-service@npm:^1.4.2":
-  version: 1.4.2
-  resolution: "@julusian/bonjour-service@npm:1.4.2"
+"@julusian/bonjour-service@npm:^1.4.5":
+  version: 1.5.1
+  resolution: "@julusian/bonjour-service@npm:1.5.1"
   dependencies:
-    dns-packet: "npm:^5.2.2"
+    dns-packet: "npm:^5.6.1"
     fast-deep-equal: "npm:^3.1.3"
     thunky: "npm:^1.0.2"
-  checksum: 10c0/3154d2f55da7ea855e2bb666f30de6d3f6dc2b1cbbfca589674bcf8068e90a5477fa0767651dda46efe9b39cd1280df12f322ed714e96832e56c2ef3e2502a03
+  checksum: 10c0/a73be942881fba6727fffd7e3f016068575a754192d22feddd0a25c267b72adc3be38f5bef95ee7db7873de80b9e9bb0cfe61ad80c52a63c29398aa81580602d
   languageName: node
   linkType: hard
 
@@ -702,22 +702,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ansi-regex@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "ansi-regex@npm:5.0.1"
-  checksum: 10c0/9a64bb8627b434ba9327b60c027742e5d17ac69277960d041898596271d992d4d52ba7267a63ca10232e29f6107fc8a835f6ce8d719b88c5f8493f8254813737
-  languageName: node
-  linkType: hard
-
-"ansi-styles@npm:^4.0.0":
-  version: 4.3.0
-  resolution: "ansi-styles@npm:4.3.0"
-  dependencies:
-    color-convert: "npm:^2.0.1"
-  checksum: 10c0/895a23929da416f2bd3de7e9cb4eabd340949328ab85ddd6e484a637d8f6820d485f53933446f5291c3b760cbc488beb8e88573dd0f9c7daf83dccc8fe81b041
-  languageName: node
-  linkType: hard
-
 "argparse@npm:^3.0.3":
   version: 3.0.4
   resolution: "argparse@npm:3.0.4"
@@ -761,41 +745,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cliui@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "cliui@npm:8.0.1"
-  dependencies:
-    string-width: "npm:^4.2.0"
-    strip-ansi: "npm:^6.0.1"
-    wrap-ansi: "npm:^7.0.0"
-  checksum: 10c0/4bda0f09c340cbb6dfdc1ed508b3ca080f12992c18d68c6be4d9cf51756033d5266e61ec57529e610dacbf4da1c634423b0c1b11037709cc6b09045cbd815df5
-  languageName: node
-  linkType: hard
-
-"color-convert@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "color-convert@npm:2.0.1"
-  dependencies:
-    color-name: "npm:~1.1.4"
-  checksum: 10c0/37e1150172f2e311fe1b2df62c6293a342ee7380da7b9cfdba67ea539909afbd74da27033208d01d6d5cfc65ee7868a22e18d7e7648e004425441c0f8a15a7d7
-  languageName: node
-  linkType: hard
-
-"color-name@npm:~1.1.4":
-  version: 1.1.4
-  resolution: "color-name@npm:1.1.4"
-  checksum: 10c0/a1a3f914156960902f46f7f56bc62effc6c94e84b2cae157a526b1c1f74b677a47ec602bf68a61abfa2b42d15b7c5651c6dbe72a43af720bc588dff885b10f95
-  languageName: node
-  linkType: hard
-
 "companion-surface-elgato-stream-deck@workspace:.":
   version: 0.0.0-use.local
   resolution: "companion-surface-elgato-stream-deck@workspace:."
   dependencies:
     "@companion-module/tools": "npm:^3.2.0"
     "@companion-surface/base": "npm:~1.4.1"
-    "@elgato-stream-deck/node": "npm:^7.7.1"
-    "@elgato-stream-deck/tcp": "npm:^7.7.1"
+    "@elgato-stream-deck/node": "npm:^7.9.0"
+    "@elgato-stream-deck/tcp": "npm:^7.9.0"
     "@julusian/jpeg-turbo": "npm:^3.1.0"
     "@types/node": "npm:^26.6.6"
     "@types/semver": "npm:^7.8.0"
@@ -841,19 +798,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dns-packet@npm:^5.2.2":
+"dns-packet@npm:^5.6.1":
   version: 5.6.1
   resolution: "dns-packet@npm:5.6.1"
   dependencies:
     "@leichtgewicht/ip-codec": "npm:^2.0.1"
   checksum: 10c0/8948d3d03063fb68e04a1e386875f8c3bcc398fc375f535f2b438fad8f41bf1afa6f5e70893ba44f4ae884c089247e0a31045722fa6ff0f01d228da103f1811d
-  languageName: node
-  linkType: hard
-
-"emoji-regex@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "emoji-regex@npm:8.0.0"
-  checksum: 10c0/b6053ad39951c4cf338f9092d7bfba448cdfd46fe6a2a034700b149ac9ffbc137e361cbd3c442297f86bed2e5f7576c1b54cc0a6bf8ef5106cc62f496af35010
   languageName: node
   linkType: hard
 
@@ -960,13 +910,6 @@ __metadata:
   bin:
     esbuild: bin/esbuild
   checksum: 10c0/9b19edb63bd7780fd2e8e65a1394a0e8a05a17d697f73f0647ffe3c134709d8dbe744ab3fd57b35c9470db268cae7678fafd3dcd3ce1f34fc590568c2433f5d2
-  languageName: node
-  linkType: hard
-
-"escalade@npm:^3.1.1":
-  version: 3.2.0
-  resolution: "escalade@npm:3.2.0"
-  checksum: 10c0/ced4dd3a78e15897ed3be74e635110bbf3b08877b0a41be50dcb325ee0e0b5f65fc2d50e9845194d7c4633f327e2e1c6cce00a71b617c5673df0374201d67f65
   languageName: node
   linkType: hard
 
@@ -1280,13 +1223,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-caller-file@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "get-caller-file@npm:2.0.5"
-  checksum: 10c0/c6c7b60271931fa752aeb92f2b47e355eac1af3a2673f47c9589e8f8a41adc74d45551c1bc57b5e66a80609f10ffb72b6f575e4370d61cc3f7f3aaff01757cde
-  languageName: node
-  linkType: hard
-
 "get-tsconfig@npm:^4.8.1":
   version: 4.10.1
   resolution: "get-tsconfig@npm:4.10.1"
@@ -1394,13 +1330,6 @@ __metadata:
   version: 2.1.1
   resolution: "is-extglob@npm:2.1.1"
   checksum: 10c0/5487da35691fbc339700bbb2730430b07777a3c21b9ebaecb3072512dfd7b4ba78ac2381a87e8d78d20ea08affb3f1971b4af629173a6bf435ff8a4c47747912
-  languageName: node
-  linkType: hard
-
-"is-fullwidth-code-point@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "is-fullwidth-code-point@npm:3.0.0"
-  checksum: 10c0/bb11d825e049f38e04c06373a8d72782eee0205bda9d908cc550ccb3c59b99d750ff9537982e01733c1c94a58e35400661f57042158ff5e8f3e90cf936daf0fc
   languageName: node
   linkType: hard
 
@@ -1578,21 +1507,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-addon-api@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "node-addon-api@npm:3.2.1"
+"node-addon-api@npm:^8.5.0, node-addon-api@npm:^8.9.0":
+  version: 8.9.2
+  resolution: "node-addon-api@npm:8.9.2"
   dependencies:
     node-gyp: "npm:latest"
-  checksum: 10c0/41f21c9d12318875a2c429befd06070ce367065a3ef02952cfd4ea17ef69fa14012732f510b82b226e99c254da8d671847ea018cad785f839a5366e02dd56302
-  languageName: node
-  linkType: hard
-
-"node-addon-api@npm:^8.5.0":
-  version: 8.5.0
-  resolution: "node-addon-api@npm:8.5.0"
-  dependencies:
-    node-gyp: "npm:latest"
-  checksum: 10c0/e4de0b4e70998fed7ef41933946f60565fc3a17cb83b7d626a0c0bb1f734cf7852e0e596f12681e7c8ed424163ee3cdbb4f0abaa9cc269d03f48834c263ba162
+  checksum: 10c0/5cf5231e0da22b22862e6b593982a0e390ca89d022a9ac666c83deceecf20378cb8afe47c456ac1a58a9f62ef60099c950aec05814a287fdfd751d9d154fb12d
   languageName: node
   linkType: hard
 
@@ -1616,16 +1536,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-hid@npm:^3.2.0":
-  version: 3.3.0
-  resolution: "node-hid@npm:3.3.0"
+"node-hid@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "node-hid@npm:3.4.0"
   dependencies:
-    node-addon-api: "npm:^3.2.1"
+    node-addon-api: "npm:^8.9.0"
     node-gyp: "npm:latest"
-    pkg-prebuilds: "npm:^1.0.0"
+    pkg-prebuilds: "npm:^1.1.0"
   bin:
     hid-showdevices: src/show-devices.js
-  checksum: 10c0/3b0af78ca6e533bed7bda5834bc9c4babb4006cfee891383361b0593ebcec9b33c57e856e2928b0ad6592219de5d34026682164210866e536d1cb23e8457864c
+  checksum: 10c0/701321d6a76b3ec8a92f6ffdf04dfab3eaf11616047c825c3c2592cd362f9d677a262d1eaf7c24ab26d8f437485278f61a93be97aa7e0137fe1e24ef08a48e30
   languageName: node
   linkType: hard
 
@@ -1754,15 +1674,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pkg-prebuilds@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "pkg-prebuilds@npm:1.0.0"
-  dependencies:
-    yargs: "npm:^17.7.2"
+"pkg-prebuilds@npm:^1.0.0, pkg-prebuilds@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "pkg-prebuilds@npm:1.1.0"
   bin:
     pkg-prebuilds-copy: bin/copy.mjs
     pkg-prebuilds-verify: bin/verify.mjs
-  checksum: 10c0/a955b097d3693216c06015fe03ae5866da5f1d2ec6a75971194e3cf5c342e1fdde27786bf0cce85814183cd98aecaf732ae1373fc2389a576daca2f3375661ae
+  checksum: 10c0/14894c0b3cffd81d53ebc47565854360b63eec72c862afa750c3f496a27f3ff9f1e992d9e728a948ad8e2ddecb91c80543a135908c59e28ef7eebf47c89de3e0
   languageName: node
   linkType: hard
 
@@ -1811,13 +1729,6 @@ __metadata:
   dependencies:
     hookified: "npm:^2.1.1"
   checksum: 10c0/4a39d45492c65a4b9795381acede1bd566028ce9764ead5b41d776b391a898bf0855dd2b59d724a6711fe253ba3cacf7c9a8832887cf9dc6d48a2c5e4997c82d
-  languageName: node
-  linkType: hard
-
-"require-directory@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "require-directory@npm:2.1.1"
-  checksum: 10c0/83aa76a7bc1531f68d92c75a2ca2f54f1b01463cb566cf3fbc787d0de8be30c9dbc211d1d46be3497dac5785fe296f2dd11d531945ac29730643357978966e99
   languageName: node
   linkType: hard
 
@@ -1893,26 +1804,6 @@ __metadata:
   version: 0.3.2
   resolution: "string-argv@npm:0.3.2"
   checksum: 10c0/75c02a83759ad1722e040b86823909d9a2fc75d15dd71ec4b537c3560746e33b5f5a07f7332d1e3f88319909f82190843aa2f0a0d8c8d591ec08e93d5b8dec82
-  languageName: node
-  linkType: hard
-
-"string-width@npm:^4.1.0, string-width@npm:^4.2.0, string-width@npm:^4.2.3":
-  version: 4.2.3
-  resolution: "string-width@npm:4.2.3"
-  dependencies:
-    emoji-regex: "npm:^8.0.0"
-    is-fullwidth-code-point: "npm:^3.0.0"
-    strip-ansi: "npm:^6.0.1"
-  checksum: 10c0/1e525e92e5eae0afd7454086eed9c818ee84374bb80328fc41217ae72ff5f065ef1c9d7f72da41de40c75fa8bb3dee63d92373fd492c84260a552c636392a47b
-  languageName: node
-  linkType: hard
-
-"strip-ansi@npm:^6.0.0, strip-ansi@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "strip-ansi@npm:6.0.1"
-  dependencies:
-    ansi-regex: "npm:^5.0.1"
-  checksum: 10c0/1ae5f212a126fe5b167707f716942490e3933085a5ff6c008ab97ab2f272c8025d3aa218b7bd6ab25729ca20cc81cddb252102f8751e13482a5199e873680952
   languageName: node
   linkType: hard
 
@@ -2088,24 +1979,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrap-ansi@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "wrap-ansi@npm:7.0.0"
-  dependencies:
-    ansi-styles: "npm:^4.0.0"
-    string-width: "npm:^4.1.0"
-    strip-ansi: "npm:^6.0.0"
-  checksum: 10c0/d15fc12c11e4cbc4044a552129ebc75ee3f57aa9c1958373a4db0292d72282f54373b536103987a4a7594db1ef6a4f10acf92978f79b98c49306a4b58c77d4da
-  languageName: node
-  linkType: hard
-
-"y18n@npm:^5.0.5":
-  version: 5.0.8
-  resolution: "y18n@npm:5.0.8"
-  checksum: 10c0/4df2842c36e468590c3691c894bc9cdbac41f520566e76e24f59401ba7d8b4811eb1e34524d57e54bc6d864bcb66baab7ffd9ca42bf1eda596618f9162b91249
-  languageName: node
-  linkType: hard
-
 "yallist@npm:^5.0.0":
   version: 5.0.0
   resolution: "yallist@npm:5.0.0"
@@ -2119,28 +1992,6 @@ __metadata:
   bin:
     yaml: bin.mjs
   checksum: 10c0/9d06676ef02b89559a8b10a71882bd2cdae81e8393dc8dbc871615c3259475d9609ad973d19cb3c9e71e72d6206e3d1e7aa241c7e55f3d16fd2e77db305827d6
-  languageName: node
-  linkType: hard
-
-"yargs-parser@npm:^21.1.1":
-  version: 21.1.1
-  resolution: "yargs-parser@npm:21.1.1"
-  checksum: 10c0/f84b5e48169479d2f402239c59f084cfd1c3acc197a05c59b98bab067452e6b3ea46d4dd8ba2985ba7b3d32a343d77df0debd6b343e5dae3da2aab2cdf5886b2
-  languageName: node
-  linkType: hard
-
-"yargs@npm:^17.7.2":
-  version: 17.7.2
-  resolution: "yargs@npm:17.7.2"
-  dependencies:
-    cliui: "npm:^8.0.1"
-    escalade: "npm:^3.1.1"
-    get-caller-file: "npm:^2.0.5"
-    require-directory: "npm:^2.1.1"
-    string-width: "npm:^4.2.3"
-    y18n: "npm:^5.0.5"
-    yargs-parser: "npm:^21.1.1"
-  checksum: 10c0/ccd7e723e61ad5965fffbb791366db689572b80cca80e0f96aad968dfff4156cd7cd1ad18607afe1046d8241e6fb2d6c08bf7fa7bfb5eaec818735d8feac8f05
   languageName: node
   linkType: hard
 
